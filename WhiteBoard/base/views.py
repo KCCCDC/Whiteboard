@@ -50,7 +50,7 @@ def home(request):
 
 def announcements(request):
 	announcements = Announcement.objects.all() 
-	return render(request, 'announcements.html', {'announcements' : announcements, 'role' : getRole(request)}) 
+	return render(request, 'announcements.html', {'announcements' : announcements}) 
 
 class CreateAnnouncementView(CreateView):
 	template_name='base_form.html'

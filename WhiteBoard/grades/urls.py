@@ -7,4 +7,5 @@ urlpatterns = patterns('',
 	url(r'^create_assignment', views.CreateAssignmentView.as_view(), name='create_assignment'),
 	url(r'^submit_assignment', views.submit_assignment, name='submit_assignment'),
 	url(r'^edit_assignment', views.edit_assignment, name='edit_assignemtn'),
+	url(r'^submissions', views.submissions, name='submissions'),
 )

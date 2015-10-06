@@ -69,3 +69,11 @@ class CreateAssignmentView(CreateView):
 	def form_valid(self, form):
 		form.instance.type = "HMWK"
 		return super(CreateAssignmentView, self).form_valid(form)
+
+def submissions(request):
+	if 'assignment' not in request.GET:
+		assignment = "None"
+	else:
+		assignment = GradableItem.objects.get(id = request.GET['assignment'])
+		submissions = Submission.objects.filter(gradableItem_id = assignment)
+	return render(request, 'grades/submissions.html', {'assignment' : assignment, 'submissions' : submissions})

@@ -10,8 +10,9 @@
 <!-- TODO _ if STudent -->
 	<li><a href="grades">Grades</a></li>
 	<li><a href="exams">Exams</a></li>
-<!-- TODO  - if Professor or TA -->
+	{% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
 	<li><a href="submissions">Submissions</a></li>
+	{% endif %}
 </ul>
 {% endblock %}
 <div class="container-fluid">
