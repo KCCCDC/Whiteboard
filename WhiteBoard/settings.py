@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 	'WhiteBoard.base',
 	'WhiteBoard.calendar',
-	'WhiteBoard.forum',
 	'WhiteBoard.grades',
 )
 
