@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container-fluid">
 <ul>
 {% for assignment in assignments %}
 	<li>
@@ -27,4 +28,5 @@
 
 <!-- TODO - only for PROF -->
 <a href="create_assignment"><button>Create Assignment</button></a>
+</div>
 {% endblock %}

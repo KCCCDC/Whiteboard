@@ -2,16 +2,21 @@
 
 {% block content %}
 <form method="" action="" id="assignment_selector">
-<select form='assignment_selector' name='assignment'>
-{% for assignment in assignments %}
-	<option value='{{ assignment.id }}'>{{ assignment.title }}</option>
-{% endfor %}
-</select><br>
-<input type="submit" />
+<div class="form-group">
+    <select form='assignment_selector' name='assignment'>
+    {% for assignment in assignments %}
+	    <option value='{{ assignment.id }}'>{{ assignment.title }}</option>
+    {% endfor %}
+    </select>
+</div>
+<br>
+<div class="form-group">
+    <button type="submit" class="btn btn-default">Submit</button>
+</div>
 </form>
 
 {% if assignment != '' %}
-<table>
+<table class="table">
 <tr>
 	<td>Submitter</td>
 	<td>Date Submitted</td>
