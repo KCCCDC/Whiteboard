@@ -211,5 +211,17 @@ def grade_examsubmissions(request):
 		return HttpResponseRedirect(reverse("grades:view_examsubmissions") + "?exam=" + str(submission.gradableItem_id))
 
 def grades(request):
-	#TODO
-	return render(request, "grades/grades.html")
+	person = Person.objects.get(user=request.user)
+	exam_grades = ExamSubmission.objects.filter(submitter=person)
+	for exam in exam_grades:
+		answers = ExamAnswer.objects.filter(examSubmission=exam)
+		exam_grades.score = 0
+		for answer in answers:
+			if answer.points != None:
+				exam_grades.score += int(answer.points)
+			else:
+				exam_grades.score = None
+				break
+	assignment_grades = Submission.objects.filter(submitter=person)
+	return render(request, "grades/grades.html", {'exam_grades' : exam_grades, \
+			'assignment_grades' : assignment_grades})

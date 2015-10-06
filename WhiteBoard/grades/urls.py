@@ -16,5 +16,5 @@ urlpatterns = patterns('',
 	url(r'^take_exam', views.take_exam, name='take_exam'),
 	url(r'^view_examsubmissions', views.view_examsubmissions, name='view_examsubmissions'),
 	url(r'^grade_examsubmission', views.grade_examsubmissions, name='grade_examsubmissions'),
-	url(r'^view_grades', views.grades, name='grades'),
+	url(r'^grades', views.grades, name='grades'),
 )
