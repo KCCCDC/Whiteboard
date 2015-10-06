@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="" method="post">
+{% csrf_token %}
+<ol>
+{% for question in questions %}
+<li><h4>{{ question.text }}</h4>
+<input type="text" name="{{ question.id }}"><br>
+</li>
+{% endfor %}
+</ol>
+<input type="submit" value="Submit"/>
+</form>
+{% endblock %}

@@ -13,4 +13,8 @@ urlpatterns = patterns('',
 	url(r'^edit_exam', views.exams, name='edit_exam'),
 	url(r'^add_question', views.edit_question, name='add_question'),
 	url(r'^edit_question', views.edit_question, name='edit_question'),
+	url(r'^take_exam', views.take_exam, name='take_exam'),
+	url(r'^view_examsubmissions', views.view_examsubmissions, name='view_examsubmissions'),
+	url(r'^grade_examsubmission', views.grade_examsubmissions, name='grade_examsubmissions'),
+	url(r'^view_grades', views.grades, name='grades'),
 )

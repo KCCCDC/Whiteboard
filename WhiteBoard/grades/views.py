@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 from WhiteBoard.base.models import Person
-from .models import GradableItem, Submission, ExamQuestion
+from .models import GradableItem, Submission, ExamQuestion, ExamSubmission, ExamAnswer
 from .forms import AssignmentForm, SubmissionForm, GradeAssignmentForm, ExamForm, ExamQuestionForm
 from WhiteBoard.base.helpers import getRole
 
@@ -103,7 +103,17 @@ def exams(request):
 					'questions' : questions})
 		else:
 			exams = GradableItem.objects.filter(type="EXAM")
-			return render(request, 'grades/exams.html', {'exams' : exams})
+			person = Person.objects.get(user = request.user)
+			for exam in exams:
+				if person.type == "STUD":
+					submission = ExamSubmission.objects.filter(gradableItem=exam, submitter=person).order_by('date_submitted')
+					if submission.count() > 0:
+						exam.submission = submission[0]
+					else:
+						exam.submission = ''
+				else:
+					exam.submission = ''
+			return render(request, 'grades/exams.html', {'exams' : exams, 'role' : getRole(request)})
 	elif request.method == "POST":
 		if 'exam' in request.GET:
 			print "HI"
@@ -115,7 +125,7 @@ def exams(request):
 					'questions' : questions})
 		else:
 			exams = GradableItem.objects.filter(type="EXAM")
-			return render(request, 'grades/exams.html', {'exams' : exams})
+			return render(request, 'grades/exams.html', {'exams' : exams, 'role' : getRole(request)})
 
 def create_exam(request):
 	if request.method == "GET":
@@ -151,3 +161,55 @@ def edit_question(request):
 			form.save()
 			url = reverse('grades:edit_exam')
 			return HttpResponseRedirect(url + "?exam=" + str(form.instance.gradableItem_id))
+
+def take_exam(request):
+	if 'exam' not in request.GET:
+		return HttpResponseRedirect(reverse('grades:exams'))
+	if request.method == "GET":
+		questions = ExamQuestion.objects.filter(gradableItem_id = request.GET['exam'])
+		return render(request, 'grades/take_exam.html', {'questions' : questions })
+	elif request.method == "POST":
+		submitter = Person.objects.get(user=request.user)
+		examSubmission = ExamSubmission(submitter=submitter, gradableItem_id = request.GET['exam'])
+		examSubmission.save()
+		questions = ExamQuestion.objects.filter(gradableItem_id = request.GET['exam'])
+		for question in questions:
+			answer = request.POST[str(question.id)]
+			examAnswer = ExamAnswer(examSubmission=examSubmission,answer=answer,examQuestion=question)
+			examAnswer.save()
+		return HttpResponseRedirect(reverse('grades:exams'))
+
+def view_examsubmissions(request):
+	if 'exam' not in request.GET:
+		return HttpResponseRedirect(reverse('grades:exams'))
+	if request.method == "GET":
+		submissions = ExamSubmission.objects.filter(gradableItem_id = request.GET['exam'])
+		for submission in submissions:
+			questions = ExamAnswer.objects.filter(examSubmission=submission)
+			submission.score = 0
+			for question in questions:
+				if question.points != None:
+					submission.score += int(question.points)
+				else:
+					score = ''
+					break
+		return render(request, 'grades/view_examsubmissions.html', {'submissions' : submissions})
+
+def grade_examsubmissions(request):
+	submission = ExamSubmission.objects.get(id=request.GET['submission'])
+	answers = ExamAnswer.objects.filter(examSubmission=submission)
+	if request.method == "GET":
+		return render(request, "grades/grade_examsubmission.html", {'submission' : submission, \
+				'answers' : answers})
+	elif request.method == "POST":
+		grader = Person.objects.get(user=request.user)
+		for answer in answers:
+			answer.points = request.POST[str(answer.examQuestion.id) + "_score"]
+			answer.comment = request.POST[str(answer.examQuestion.id) + "_comment"]
+			answer.grader = grader
+			answer.save()
+		return HttpResponseRedirect(reverse("grades:view_examsubmissions") + "?exam=" + str(submission.gradableItem_id))
+
+def grades(request):
+	#TODO
+	return render(request, "grades/grades.html")

@@ -15,9 +15,9 @@
 	<h4>Due {{ exam.due_date }} </h4>
 	<p>{{ exam.description }}</p>
 	<a href="{{ exam.file }}">{{ exam.file }}</a>
-	{% if role == 'STUD' and exam.attempt != '' %}
+	{% if role == 'STUD' and exam.submission != '' %}
 		<h3>Last Taken</h3>
-		<h4>Taken on: {{ exam.attempt.date_submitted }}</h4>
+		<h4>Taken on: {{ exam.submission.date_submitted }}</h4>
 	{% endif %}
 	</li>
 {% endfor %}

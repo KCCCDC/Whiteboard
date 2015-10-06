@@ -5,6 +5,7 @@
 {{ form.as_p }}
 <input type="submit" value="Save changes to base exam"/>
 </form>
+<a href="view_examsubmissions?exam={{ exam.id }}"><button>View Exam Submissions</button></a>
 <ol>
 {% for question in questions %}
 	<a href="edit_question?question={{ question.id }}"><li>{{ question.text}}, {{ question.max_points}} points</li></a>
