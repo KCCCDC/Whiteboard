@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 {% for event in events %}
-<h3>{{ event.title }}</h3>
-<h4>{{ event.date }}</h4>
-<p>{{ event.description }}</p>
+{% autoescape off %}
+<h3>{{ event.title|safe }}</h3>
+<h4>{{ event.date|safe }}</h4>
+<p>{{ event.description|safe }}</p>
 {% endfor %}
 {% for assignment in gradable_items %}
-<h3>{{ assignment.title }}</h3>
-<h4>Due: {{ assignment.due_date }}</h4>
+<h3>{{ assignment.title|safe }}</h3>
+<h4>Due: {{ assignment.due_date|safe }}</h4>
 {% endfor %}
 <a href="create_event"><button>Create Event</buton></a>
+{% endautoescape %}
 {% endblock %}

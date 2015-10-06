@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+{% autoescape off %}
 <form action="" method="post">
 {% csrf_token %}
-{{ form.as_p }}
+{{ form.as_p|safe }}
 <input type="submit" />
 </form>
+{% endautoescape %}
 {% endblock %}

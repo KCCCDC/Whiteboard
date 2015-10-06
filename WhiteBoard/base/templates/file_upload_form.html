@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+{% autoescape off %}
 <form action="" method="post" enctype="multipart/form-data">
 {% csrf_token %}
-{{ form.as_p }}
+{{ form.as_p|safe }}
 <button class="btn btn-default" type="submit">Submit</button>
 </form>
+{% endautoescape %}
 {% endblock %}
