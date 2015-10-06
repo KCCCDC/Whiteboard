@@ -63,7 +63,7 @@ def edit_assignment(request):
 		form.save()
 		return HttpResponseRedirect(reverse('grades:assignments'))
 
-@crsf_exempt
+@csrf_exempt
 class CreateAssignmentView(CreateView):
 	template_name='file_upload_form.html'
 	model = GradableItem 
