@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+{% for assignment in assignments %}
+	<li>
+	<h3>{{ assignment.title }}</h3>
+	<h4>{{ assignment.max_score }} points</h4>
+	<h4>Due {{ assignment.due_date }} </h4>
+	<p>{{ assignment.description }}</p>
+	</li>
+{% endfor %}
+</ul>
+
+<!-- TODO - only for PROF -->
+<a href="create_assignment"><button>Create Assignment</button></a>
+{% endblock %}
