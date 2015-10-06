@@ -22,5 +22,5 @@ class Submission(models.Model):
 	score = models.IntegerField(null=True)
 	submission_text = models.CharField(max_length=512, blank=True)
 	grading_comment = models.CharField(max_length=256, blank=True, null=True)
-	file = models.FileField(blank=True, null=True)
+	file = models.FileField(upload_to=getUploadDir, blank=True, null=True)
 

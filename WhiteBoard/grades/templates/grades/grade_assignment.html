@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<! -- TODO - insert information from instance -->
+<h3>{{ submission.gradableItem.title }}</h3>
+<h3>Submitted by {{ submission.submitter.user.first_name}} {{ submission.submitter.user.last_name }} on {{ submission.date_submitted }}</h3>
+{% if submission.file != "" %}
+<h4><a href="{{ submission.file }}">{{ submission.file }}</a></h4>
+{% endif %}
+<p>{{ submission.submission_text }}</p>
 <form action="" method="post">
 {% csrf_token %}
 {{ form.as_p }}
