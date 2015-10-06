@@ -4,10 +4,23 @@
 <ul>
 {% for assignment in assignments %}
 	<li>
+	{% if role == "STUD" %}
+		<a href="submit_assignment?id={{ assignment.id }}">
+	{% else %}
+		<a href="edit_assignment?id={{ assignment.id }}">
+	{% endif %}
 	<h3>{{ assignment.title }}</h3>
+	</a>
 	<h4>{{ assignment.max_score }} points</h4>
 	<h4>Due {{ assignment.due_date }} </h4>
 	<p>{{ assignment.description }}</p>
+	<a href="{{ assignment.file }}">{{ assignment.file }}</a>
+	{% if role == 'STUD' and assignment.submission != '' %}
+		<h3>Submission</h3>
+		<h4>Submitted on: {{ assignment.submission.date_submitted }}</h4>
+		<p><a href="{{ assignment.submission.file }}">{{ assignment.submission.file }}</a></p>
+		<p>{{ assignment.submission.submission_text }}</p>
+	{% endif %}
 	</li>
 {% endfor %}
 </ul>

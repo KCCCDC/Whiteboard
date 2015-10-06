@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
+from .helpers import getRole
 from .models import Announcement, Person
 
 from os import listdir
@@ -40,17 +41,16 @@ def invalidLogin(request):
 	return render(request, 'users/invalidLogin.html')
 
 def index(request):
-    # TODO 
-	return render(request, 'base.html')
+	return login(request)
 
 def home(request):
 	# TODO
 	announcments = Announcement.objects.all() 
-	return render(request, 'home.html', {'announcements' : announcements})
+	return render(request, 'home.html', {'announcements' : announcements, 'role' : getRole(request)})
 
 def announcements(request):
 	announcements = Announcement.objects.all() 
-	return render(request, 'announcements.html', {'announcements' : announcements}) 
+	return render(request, 'announcements.html', {'announcements' : announcements, 'role' : getRole(request)}) 
 
 class CreateAnnouncementView(CreateView):
 	template_name='base_form.html'
