@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="" method="">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Save changes to base exam"/>
+</form>
+<ol>
+{% for question in questions %}
+	<a href="edit_question?question={{ question.id }}"><li>{{ question.text}}, {{ question.max_points}} points</li></a>
+{% endfor %}
+</ol>
+<a href="add_question?exam={{ exam.id }}"><button>Add Question</button></a>
+{% endblock %}

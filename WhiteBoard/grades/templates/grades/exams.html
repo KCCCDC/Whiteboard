@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+{% for exam in exams %}
+	<li>
+	{% if role == "STUD" %}
+		<a href="take_exam?exam={{ exam.id }}">
+	{% else %}
+		<a href="edit_exam?exam={{ exam.id }}">
+	{% endif %}
+	<h3>{{ exam.title }}</h3>
+	</a>
+	<h4>{{ exam.max_score }} points</h4>
+	<h4>Due {{ exam.due_date }} </h4>
+	<p>{{ exam.description }}</p>
+	<a href="{{ exam.file }}">{{ exam.file }}</a>
+	{% if role == 'STUD' and exam.attempt != '' %}
+		<h3>Last Taken</h3>
+		<h4>Taken on: {{ exam.attempt.date_submitted }}</h4>
+	{% endif %}
+	</li>
+{% endfor %}
+</ul>
+
+<!-- TODO - only for PROF -->
+<a href="create_exam"><button>Create Exam</button></a>
+{% endblock %}

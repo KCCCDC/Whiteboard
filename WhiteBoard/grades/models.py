@@ -24,3 +24,23 @@ class Submission(models.Model):
 	grading_comment = models.CharField(max_length=256, blank=True, null=True)
 	file = models.FileField(upload_to=getUploadDir, blank=True, null=True)
 
+#class ExamSubmission(models.Model):
+#	gradableItem = models.ForeignKey(GradableItem)
+#	submitter = models.ForeignKey(Person, related_name='exam_submitter')
+#	date_submitted = models.DateField(auto_now=False, auto_now_add=True)
+#	grader = models.ForeignKey(Person, related_name='exam_grader', null=True)
+#	score = models.IntegerField(null=True)
+
+class ExamQuestion(models.Model):
+	gradableItem = models.ForeignKey(GradableItem)
+	type = models.CharField(max_length=4)
+	max_points = models.IntegerField()
+	text = models.CharField(max_length=256)
+
+#class ExamAnswer(models.Model):
+#	examSubmission = models.ForeignKey(ExamSubmission, related_name='examAnswer_submission')
+#	answer = models.CharField(512)
+#	points = models.IntegerField()
+#	comment = models.CharField(256)
+#	examQuestion = models.ForeignKey(ExamQuestion, related_name='examAnswer_question')
+	

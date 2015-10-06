@@ -12,8 +12,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 from WhiteBoard.base.models import Person
-from .models import GradableItem, Submission
-from .forms import AssignmentForm, SubmissionForm, GradeAssignmentForm
+from .models import GradableItem, Submission, ExamQuestion
+from .forms import AssignmentForm, SubmissionForm, GradeAssignmentForm, ExamForm, ExamQuestionForm
 from WhiteBoard.base.helpers import getRole
 
 from os import listdir
@@ -92,3 +92,62 @@ def submissions(request):
 	assignments = GradableItem.objects.filter(type="HMWK")
 	return render(request, 'grades/submissions.html', {'assignment' : assignment, 'submissions' : submissions, \
 		'assignments' : assignments})
+
+def exams(request):
+	if request.method == "GET":
+		if 'exam' in request.GET:
+			instance = GradableItem.objects.get(id=request.GET['exam'])
+			form = ExamForm(instance=instance)
+			questions = ExamQuestion.objects.filter(gradableItem=instance)
+			return render(request, 'grades/exam_form.html', {'form' : form, 'exam' : instance, \
+					'questions' : questions})
+		else:
+			exams = GradableItem.objects.filter(type="EXAM")
+			return render(request, 'grades/exams.html', {'exams' : exams})
+	elif request.method == "POST":
+		if 'exam' in request.GET:
+			print "HI"
+			instance = GradableItem.objects.get(id=request.GET['exam'])
+			form = ExamForm(request.POST, instance=instance)
+			form.save()
+			questions = ExamQuestion.objects.filter(gradableItem = instance)
+			return render(request, 'grades/exam_form.html', {'form' : form, 'exam' : form.instance, \
+					'questions' : questions})
+		else:
+			exams = GradableItem.objects.filter(type="EXAM")
+			return render(request, 'grades/exams.html', {'exams' : exams})
+
+def create_exam(request):
+	if request.method == "GET":
+		form = ExamForm()
+		return render(request, 'base_form.html', {'form' : form})
+	elif request.method == "POST":
+		form = ExamForm(request.POST)
+		form.instance.type = "EXAM"
+		form.save()
+		url = reverse('grades:exams')
+		return HttpResponseRedirect(url + "?exam=" + str(form.instance.id))
+
+def edit_question(request):
+	if request.method == "GET":
+		if 'question' in request.GET:
+			instance = ExamQuestion.objects.get(id = request.GET['question'])
+			form = ExamQuestionForm(instance=instance)
+			return render(request, 'base_form.html', {'form' : form})
+		elif 'exam' in request.GET:
+			form = ExamQuestionForm()
+			return render(request, 'base_form.html', {'form' : form})
+	if request.method == "POST":
+		if 'question' in request.GET:
+			instance = ExamQuestion.objects.get(id = request.GET['question'])
+			form = ExamQuestionForm(request.POST, instance=instance)
+			form.save()
+			url = reverse('grades:edit_exam')
+			return HttpResponseRedirect(url + "?exam=" + str(instance.gradableItem_id))
+		elif 'exam' in request.GET:
+			form = ExamQuestionForm(request.POST)
+			form.instance.gradableItem_id = request.GET['exam']
+			form.instance.type = "TEXT" # TODO - add support for Multiple Choice
+			form.save()
+			url = reverse('grades:edit_exam')
+			return HttpResponseRedirect(url + "?exam=" + str(form.instance.gradableItem_id))
