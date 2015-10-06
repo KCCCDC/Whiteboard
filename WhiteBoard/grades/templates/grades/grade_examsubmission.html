@@ -3,7 +3,6 @@
 <h3>Exam submitted by {{ submission.submitter.user.first_name }} {{ submission.submitter.user.last_name }}
 on {{ submision.date_submitted }}</h3>
 <form action="" method="post">
-{% csrf_token %}
 <ol>
 {% for answer in answers %}
 <li><h4>{{ answer.examQuestion.text }}</h4>

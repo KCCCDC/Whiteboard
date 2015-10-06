@@ -10,6 +10,7 @@ from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from WhiteBoard.base.models import Person
 from .models import GradableItem, Submission, ExamQuestion, ExamSubmission, ExamAnswer
@@ -30,6 +31,7 @@ def assignments(request):
 			assignment.submission = ''
 	return render(request, 'grades/assignments.html', {'assignments' : assignments, 'role' : getRole(request)})
 
+@csrf_exempt
 def submit_assignment(request):
 	id = request.GET['id']
 	instance = Submission.objects.filter(gradableItem_id=id, submitter_id=request.user.id)
@@ -49,6 +51,7 @@ def submit_assignment(request):
 		form.save()
 		return HttpResponseRedirect(reverse('grades:assignments'))
 
+@csrf_exempt
 def edit_assignment(request):
 	id = request.GET['id']
 	instance = GradableItem.objects.get(id=id);
@@ -60,6 +63,7 @@ def edit_assignment(request):
 		form.save()
 		return HttpResponseRedirect(reverse('grades:assignments'))
 
+@crsf_exempt
 class CreateAssignmentView(CreateView):
 	template_name='file_upload_form.html'
 	model = GradableItem 
@@ -70,6 +74,7 @@ class CreateAssignmentView(CreateView):
 		form.instance.type = "HMWK"
 		return super(CreateAssignmentView, self).form_valid(form)
 
+@csrf_exempt
 def submissions(request):
 	if 'submission' in request.GET and request.method == "GET":
 		submission = request.GET['submission']
@@ -93,6 +98,7 @@ def submissions(request):
 	return render(request, 'grades/submissions.html', {'assignment' : assignment, 'submissions' : submissions, \
 		'assignments' : assignments})
 
+@csrf_exempt
 def exams(request):
 	if request.method == "GET":
 		if 'exam' in request.GET:
@@ -127,6 +133,7 @@ def exams(request):
 			exams = GradableItem.objects.filter(type="EXAM")
 			return render(request, 'grades/exams.html', {'exams' : exams, 'role' : getRole(request)})
 
+@csrf_exempt
 def create_exam(request):
 	if request.method == "GET":
 		form = ExamForm()
@@ -138,6 +145,7 @@ def create_exam(request):
 		url = reverse('grades:exams')
 		return HttpResponseRedirect(url + "?exam=" + str(form.instance.id))
 
+@csrf_exempt
 def edit_question(request):
 	if request.method == "GET":
 		if 'question' in request.GET:
@@ -162,6 +170,7 @@ def edit_question(request):
 			url = reverse('grades:edit_exam')
 			return HttpResponseRedirect(url + "?exam=" + str(form.instance.gradableItem_id))
 
+@csrf_exempt
 def take_exam(request):
 	if 'exam' not in request.GET:
 		return HttpResponseRedirect(reverse('grades:exams'))
@@ -195,6 +204,7 @@ def view_examsubmissions(request):
 					break
 		return render(request, 'grades/view_examsubmissions.html', {'submissions' : submissions})
 
+@csrf_exempt
 def grade_examsubmissions(request):
 	submission = ExamSubmission.objects.get(id=request.GET['submission'])
 	answers = ExamAnswer.objects.filter(examSubmission=submission)

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-{% for event in events %}
 {% autoescape off %}
+{% for event in events %}
 <h3>{{ event.title|safe }}</h3>
 <h4>{{ event.date|safe }}</h4>
 <p>{{ event.description|safe }}</p>

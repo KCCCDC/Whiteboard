@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <form action="" method="post">
-{% csrf_token %}
 <ol>
 {% for question in questions %}
 <li><h4>{{ question.text }}</h4>
