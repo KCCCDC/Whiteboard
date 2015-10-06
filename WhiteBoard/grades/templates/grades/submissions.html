@@ -1,11 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<! -- TODO - insert search function -->
-{% if assignment != "None" %}
+<form method="" action="" id="assignment_selector">
+<select form='assignment_selector' name='assignment'>
+{% for assignment in assignments %}
+	<option value='{{ assignment.id }}'>{{ assignment.title }}</option>
+{% endfor %}
+</select><br>
+<input type="submit" />
+</form>
+
+{% if assignment != '' %}
 <table>
-	{% for submission in submissions %}
-	{% endfor %}
-<table>
+<tr>
+	<td>Submitter</td>
+	<td>Date Submitted</td>
+	<td>Score</td>
+	<td>Grader</td>
+</tr>
+{% for submission in submissions %}
+<tr>
+	<td><a href="submissions?submission={{ submission.id }}">
+	{{ submission.submitter.user.first_name }} {{ submission.submitter.user.last_name }}</a></td>
+	<td><a href="submissions?submission={{ submission.id }}">
+	{{ submission.date_submitted }}</a></td>
+	<td><a href="submissions?submission={{ submission.id }}">
+	{% if score != "" %}{{ submission.score }}{% else %}-{% endif %}</a></td>
+	<td><a href="submissions?submission={{ submission.id }}">
+		{% if submission.grader != "" %}{{ submission.grader.user.first_name }} {{submission.grader.user.last_name }}
+		{% else %}-{% endif %}</a></td>
+</tr>
+</a>
+{% endfor %}
 {% endif %}
 {% endblock %}

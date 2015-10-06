@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 from WhiteBoard.base.models import Person
 from .models import GradableItem, Submission
-from .forms import AssignmentForm, SubmissionForm
+from .forms import AssignmentForm, SubmissionForm, GradeAssignmentForm
 from WhiteBoard.base.helpers import getRole
 
 from os import listdir
@@ -71,9 +71,24 @@ class CreateAssignmentView(CreateView):
 		return super(CreateAssignmentView, self).form_valid(form)
 
 def submissions(request):
-	if 'assignment' not in request.GET:
-		assignment = "None"
+	if 'submission' in request.GET and request.method == "GET":
+		submission = request.GET['submission']
+		instance = Submission.objects.get(id=submission)
+		form = GradeAssignmentForm(instance=instance)
+		return render(request, "grades/grade_assignment.html", {'form' : form, 'submission' : instance})
+	elif 'submission' in request.GET and request.method == "POST":
+		instance = Submission.objects.get(id=request.GET['submission'])
+		form = GradeAssignmentForm(request.POST, instance=instance)
+		form.instance.grader = Person.objects.get(user_id = request.user.id)
+		form.save()
+		assignment = Submission.objects.get(id=request.GET['submission']).gradableItem.id
+		submissions = Submission.objects.filter(gradableItem_id = assignment)
+	elif 'assignment' not in request.GET:
+		assignment = ""
+		submissions = ""
 	else:
 		assignment = GradableItem.objects.get(id = request.GET['assignment'])
 		submissions = Submission.objects.filter(gradableItem_id = assignment)
-	return render(request, 'grades/submissions.html', {'assignment' : assignment, 'submissions' : submissions})
+	assignments = GradableItem.objects.filter(type="HMWK")
+	return render(request, 'grades/submissions.html', {'assignment' : assignment, 'submissions' : submissions, \
+		'assignments' : assignments})
