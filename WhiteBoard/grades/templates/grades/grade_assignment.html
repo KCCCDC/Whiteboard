@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3 class="page-heading">{{ submission.gradableItem.title }}</h3>
-<h3>Submitted by {{ submission.submitter.user.first_name}} {{ submission.submitter.user.last_name }} on {{ submission.date_submitted }}</h3>
+{% autoescape off %}
+<h3 class="page-heading">{{ submission.gradableItem.title|safe }}</h3>
+<h3>Submitted by {{ submission.submitter.user.first_name|safe}} {{ submission.submitter.user.last_name|safe }} on {{ submission.date_submitted|safe }}</h3>
 {% if submission.file != "" %}
-<h4><a href="{{ submission.file }}">{{ submission.file }}</a></h4>
+<h4><a href="{{ submission.file|safe }}">{{ submission.file|safe }}</a></h4>
 {% endif %}
-<p>{{ submission.submission_text }}</p>
+<p>{{ submission.submission_text|safe }}</p>
 <form action="" method="post">
-{{ form.as_p }}
+{{ form.as_p|safe }}
 <button class="btn btn-default" type="submit">Submit</button>
 </form>
+{% endautoescape %}
 {% endblock %}

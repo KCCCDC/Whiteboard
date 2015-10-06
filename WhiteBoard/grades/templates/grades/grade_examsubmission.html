@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3 class="page-heading">Exam submitted by {{ submission.submitter.user.first_name }} {{ submission.submitter.user.last_name }}
-on {{ submision.date_submitted }}</h3>
+{% autoescape off %}
+<h3 class="page-heading">Exam submitted by {{ submission.submitter.user.first_name|safe }} {{ submission.submitter.user.last_name|safe }}
+on {{ submision.date_submitted|safe }}</h3>
 <form action="" method="post">
 <ol>
 {% for answer in answers %}
-<li><h4>{{ answer.examQuestion.text }}</h4>
-<p>Out of {{ answer.examQuestion.max_points }} points</p>
-<p>{{ answer.answer }}</p>
+<li><h4>{{ answer.examQuestion.text|safe }}</h4>
+<p>Out of {{ answer.examQuestion.max_points|safe }} points</p>
+<p>{{ answer.answer|safe }}</p>
 <div class="form-group">
-    <label for="{{ answer.examQuestion.id }}_score">Score</label>
-    <input type="number" id="{{ answer.examQuestion.id }}_score" class="form-control" name="{{ answer.examQuestion.id }}_score" default="{{ answer.points }}"/>
+    <label for="{{ answer.examQuestion.id|safe }}_score">Score</label>
+    <input type="number" id="{{ answer.examQuestion.id|safe }}_score" class="form-control" name="{{ answer.examQuestion.id|safe }}_score" default="{{ answer.points|safe }}"/>
 </div>
 <div class="form-group">
-    <label for="{{ answer.examQuestion.id }}_comment">Comment</label>
-    <input type="number" id="{{ answer.examQuestion.id }}_comment" class="form-control" name="{{ answer.examQuestion.id }}_comment" default="{{ answer.points }}"/>
+    <label for="{{ answer.examQuestion.id|safe }}_comment">Comment</label>
+    <input type="number" id="{{ answer.examQuestion.id|safe }}_comment" class="form-control" name="{{ answer.examQuestion.id|safe }}_comment" default="{{ answer.points|safe }}"/>
 </div>
 </li>
 {% endfor %}
@@ -22,4 +23,5 @@ on {{ submision.date_submitted }}</h3>
 <button class="btn btn-default" type="submit">Submit scores</button>
 
 </form>
+{% endautoescape %}
 {% endblock %}
