@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% block menubar %}
+<h1> Welcome to WhiteBoard!!! </h1>
+<ul>
+	<li><a href="home">Home</a></li>
+	<li><a href="announcements">Announcements</a></li>
+	<li><a href="calendar">Calendar</a></li>
+	<li><a href="forum">Forum</a></li>
+	<li><a href="assignments">Assignments</a></li>
+<!-- TODO _ if STudent -->
+	<li><a href="grades">Grades</a></li>
+	<li><a href="exams">Exams</a></li>
+<!-- TODO  - if Professor or TA -->
+	<li><a href="submissions">Submissions</a></li>
+</ul>
+{% endblock %}
+<div class="container-fluid">
+
+<div class="row">
+<div class="col-sm-1">
+</div>
+<div class="col-sm-10">
+{% block content %}
+
+Insert Content Here!!!
+{% endblock %}
+</div>
+<div class="col-sm-1"></div>
+</div></div>
+
+</body>

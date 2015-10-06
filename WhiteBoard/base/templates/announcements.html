@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+{% for announcement in announcements %}
+	<li>
+		<h3>{{ announcement.title }}</h3>
+		<h4>{{ announcement.date_posted }} by {{ announcement.poster.first_name }} {{ announcement.poster.last_name }}</h4>
+		<p>{{ announcement.content}}</p>
+	</li>
+{% endfor %}
+</ul>
+<button><a href="create_announcement">Create Announcement</a></button>
+{% endblock %}
+

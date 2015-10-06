@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+TODO - insert home page content.
+<ul>
+{% for announcement in announcements %}
+	<li>
+		<h3>{{ announcement.title }}</h3>
+		<h4>{{ announcement.date_posted }} by {{ announcement.poster.first_name }} {{ announcement.post.last_name }}</h4>
+		<p>{{ announcement.content}}</p>
+	</li>
+{% endfor %}
+</ul>
+{% endblock %}

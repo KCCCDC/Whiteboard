@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block menubar %}
+<head>
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}bootstrap-3.3.2-dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}base_css.css">
+</head>
+<!-- Empty menu bar for prettiness reasons -->
+<nav class="navbar navbar-default" style="padding:8px;">
+<div class="container-fluid">
+<div class="navbar-header">
+<div class="nav navbar-nav">
+<!-- Empty on purpose. Could add a logo later. -->
+{% load static %}
+<img src="{% static 'logo-med-lilac.png' %}" alt="PLANtastic Logo">
+</div>
+</div>
+</div>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+{% if form.error %}
+<p class="error">Sorry, that was not a valid username or password.</p>
+{% endif %}
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+			<h3 class="panel-title">Log in</h3>
+	</div>
+	<div class="panel-body">
+
+<form action= "{% url 'base:auth' %}" method= "POST">
+{% csrf_token %}
+
+<label for ="username"> Username: </label><input type="text" name="username" value="" id="username"><br>
+<label for ="password"> Password: </label><input type="password" name="password" value="" id="password"><br>
+<br>
+<input type= "submit" value="Log in" class="btn btn-default">
+</form>
+<br>
+<a href = "{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
+
+</div>
+{% endblock %}
+
