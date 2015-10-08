@@ -5,7 +5,7 @@
 
 
 {% block content %}
-
+{% autoescape off %}
 {% if form.error %}
 <p class="error">Sorry, that was not a valid username or password.</p>
 {% endif %}
@@ -28,5 +28,6 @@
 <a href = "{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
 
 </div>
+{% endautoescape %}
 {% endblock %}
 

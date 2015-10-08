@@ -10,6 +10,7 @@ from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from WhiteBoard.base.models import Person
 from WhiteBoard.grades.models import GradableItem
@@ -25,6 +26,7 @@ def calendar(request):
 	events = Event.objects.all().order_by('date')
 	return render(request, "calendar/calendar.html", {'gradable_items' : gradable_items, 'events' : events})
 
+@csrf_exempt
 def edit_event(request):
 	if request.method == "GET":
 		if 'event' not in request.method:

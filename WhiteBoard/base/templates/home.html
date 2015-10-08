@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-TODO - insert home page content.
+{% autoescape off %}
 <div class="container-fluid">
     <div class="page-header">
-        <h2>Welcome, you are a {{ role }}</h2>
+        <h2>Welcome to WhiteBoard!</h2>
     </div>
     <ul>
     {% for announcement in announcements %}
 	    <li>
-		    <h3>{{ announcement.title }}</h3>
-		    <h4>{{ announcement.date_posted }} by {{ announcement.poster.first_name }} {{ announcement.post.last_name }}</h4>
-		    <p>{{ announcement.content}}</p>
+		    <h3>{{ announcement.title|safe }}</h3>
+		    <h4>{{ announcement.date_posted|safe }} by {{ announcement.poster.first_name|safe }} {{ announcement.post.last_name|safe }}</h4>
+		    <p>{{ announcement.content|safe}}</p>
 	    </li>
     {% endfor %}
     </ul>
 </div>
+{% endautoescape %}
 {% endblock %}

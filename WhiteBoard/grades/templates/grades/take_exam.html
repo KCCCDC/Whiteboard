@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+{% autoescape off %}
 <form action="" method="post">
-{% csrf_token %}
 <ol>
 {% for question in questions %}
-<li><h4>{{ question.text }}</h4>
-<input type="text" name="{{ question.id }}"><br>
+<li>
+<div class="form-group">
+    <label for="{{ question.id|safe }}">{{ question.text|safe }}</label>
+    <input class="form-control" id="{{ question.id|safe }}" type="text" name="{{ question.id|safe }}">
+</div>
 </li>
 {% endfor %}
 </ol>
-<input type="submit" value="Submit"/>
+<button class="btn btn-default" type="submit">Submit</button>
 </form>
+{% endautoescape %}
 {% endblock %}

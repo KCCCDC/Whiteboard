@@ -1,28 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<ul>
+{% autoescape off %}
 {% for exam in exams %}
-	<li>
-	{% if role == "STUD" %}
-		<a href="take_exam?exam={{ exam.id }}">
+<div class="panel panel-default">
+    <div class="panel-heading">
+    {% if role == "STUD" %}
+		<a href="take_exam?exam={{ exam.id|safe }}">
 	{% else %}
-		<a href="edit_exam?exam={{ exam.id }}">
+		<a href="edit_exam?exam={{ exam.id|safe }}">
 	{% endif %}
-	<h3>{{ exam.title }}</h3>
+	<h3 class="panel-title">{{ exam.title|safe }}</h3>
 	</a>
-	<h4>{{ exam.max_score }} points</h4>
-	<h4>Due {{ exam.due_date }} </h4>
-	<p>{{ exam.description }}</p>
-	<a href="{{ exam.file }}">{{ exam.file }}</a>
+    </div>
+    <div class="panel-body">
+	<h4>{{ exam.max_score|safe }} points</h4>
+	<h4>Due {{ exam.due_date|safe }} </h4>
+	<p>{{ exam.description|safe }}</p>
+	<a href="{{ exam.file|safe }}">{{ exam.file|safe }}</a>
 	{% if role == 'STUD' and exam.submission != '' %}
 		<h3>Last Taken</h3>
-		<h4>Taken on: {{ exam.submission.date_submitted }}</h4>
+		<h4>Taken on: {{ exam.submission.date_submitted|safe }}</h4>
 	{% endif %}
-	</li>
+	</div>
+</div>
 {% endfor %}
-</ul>
 
 <!-- TODO - only for PROF -->
-<a href="create_exam"><button>Create Exam</button></a>
+<a href="create_exam"><button class="btn btn-default">Create Exam</button></a>
+{% endautoescape %}
 {% endblock %}

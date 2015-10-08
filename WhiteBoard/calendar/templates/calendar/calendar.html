@@ -1,13 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
+{% autoescape off %}
 {% for event in events %}
-<h3>{{ event.title }}</h3>
-<h4>{{ event.date }}</h4>
-<p>{{ event.description }}</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ event.title|safe }}</h3>
+    </div>
+    <div class="panel-body">
+        <h4>{{ event.date|safe }}</h4>
+        <p>{{ event.description|safe }}</p>
+    </div>
+</div>
 {% endfor %}
 {% for assignment in gradable_items %}
-<h3>{{ assignment.title }}</h3>
-<h4>Due: {{ assignment.due_date }}</h4>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>{{ assignment.title|safe }}</h3>
+    </div>
+    <div class="panel-body">
+        <h4>Due: {{ assignment.due_date|safe }}</h4>
+    </div>
+</div>
 {% endfor %}
-<a href="create_event"><button>Create Event</buton></a>
+<a href="create_event"><button class="btn btn-default">Create Event</button></a>
 {% endblock %}

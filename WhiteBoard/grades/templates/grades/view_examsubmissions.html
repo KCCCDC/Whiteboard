@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table>
+{% autoescape off %}
+<table class="table table-striped">
 <tr>
 	<td>Submitter</td>
 	<td>Date Submitted</td>
@@ -9,13 +10,14 @@
 </tr>
 {% for submission in submissions %}
 <tr>
-	<td><a href="grade_examsubmission?submission={{ submission.id }}">
-	{{ submission.submitter.user.first_name }} {{ submission.submitter.user.last_name }}</a></td>
-	<td><a href="grade_examsubmission?submission={{ submission.id }}">
-	{{ submission.date_submitted }}</a></td>
-	<td><a href="grade_examsubmission?submission={{ submission.id }}">
-	{% if score != "" %}{{ submission.score }}{% else %}-{% endif %}</a></td>
+	<td><a href="grade_examsubmission?submission={{ submission.id|safe }}">
+	{{ submission.submitter.user.first_name|safe }} {{ submission.submitter.user.last_name|safe }}</a></td>
+	<td><a href="grade_examsubmission?submission={{ submission.id|safe }}">
+	{{ submission.date_submitted|safe }}</a></td>
+	<td><a href="grade_examsubmission?submission={{ submission.id|safe }}">
+	{% if score != "" %}{{ submission.score|safe }}{% else %}-{% endif %}</a></td>
 </tr>
 </a>
 {% endfor %}
+{% endautoescape %}
 {% endblock %}

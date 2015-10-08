@@ -2,9 +2,9 @@
 
 {% block menubar %}
 <head>
-	<title>{{title}}</title>
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}bootstrap-3.3.2-dist/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}base_css.css">
+	<title>{{title|safe}}</title>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}bootstrap-3.3.2-dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}base_css.css">
 </head>
 <!-- Empty menu bar for prettiness reasons -->
 <nav class="navbar navbar-default" style="padding:8px;">
@@ -22,6 +22,7 @@
 
 
 {% block content %}
+{% autoescape off %}
 
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -46,4 +47,5 @@
 <a href = "{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
 
 </div>
+{% endautoescape %}
 {% endblock %}
