@@ -10,6 +10,7 @@ from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from .helpers import getRole
 from .models import Announcement, Person
@@ -57,6 +58,10 @@ class CreateAnnouncementView(CreateView):
 	model = Announcement
 	fields = ['title', 'content']
 	success_url = '/announcements'
+
+	@method_decorator(csrf_exempt)
+	def dispatch(self, *args, **kwargs):
+		return super(CreateAnnouncementView, self).dispatch(*args, **kwargs)
 
 	@method_decorator(login_required(login_url = '/'))
 	def get(self, request):

@@ -69,6 +69,10 @@ class CreateAssignmentView(CreateView):
 	fields = ['max_score', 'title', 'description', 'due_date', 'file']
 	success_url = '/assignments'
 
+	@method_decorator(csrf_exempt)
+	def dispatch(self, *args, **kwargs):
+		return super(CreateAssignmentView, self).dispatch(*args, **kwargs)
+
 	def form_valid(self, form):
 		form.instance.type = "HMWK"
 		return super(CreateAssignmentView, self).form_valid(form)
