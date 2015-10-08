@@ -2,15 +2,17 @@
 
 {% block content %}
 {% autoescape off %}
-<ul>
 {% for announcement in announcements %}
-	<li>
+<div class="panel panel-default">
+    <div class="panel-heading">
 		<h3>{{ announcement.title|safe }}</h3>
-		<h4>{{ announcement.date_posted|safe }} by {{ announcement.poster.first_name|safe }} {{ announcement.poster.last_name|safe }}</h4>
+	</div>
+    <div class="panel-body">
+        <h4>{{ announcement.date_posted|safe }} by {{ announcement.poster.first_name|safe }} {{ announcement.poster.last_name|safe }}</h4>
 		<p>{{ announcement.content|safe}}</p>
-	</li>
+	</div>
+</div>
 {% endfor %}
-</ul>
 <button class="btn btn-default"><a href="create_announcement">Create Announcement</a></button>
 {% endautoescape %}
 {% endblock %}

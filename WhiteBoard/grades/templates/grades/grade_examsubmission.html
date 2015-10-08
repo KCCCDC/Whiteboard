@@ -15,7 +15,7 @@ on {{ submision.date_submitted|safe }}</h3>
 </div>
 <div class="form-group">
     <label for="{{ answer.examQuestion.id|safe }}_comment">Comment</label>
-    <input type="number" id="{{ answer.examQuestion.id|safe }}_comment" class="form-control" name="{{ answer.examQuestion.id|safe }}_comment" default="{{ answer.points|safe }}"/>
+    <input type="text" id="{{ answer.examQuestion.id|safe }}_comment" class="form-control" name="{{ answer.examQuestion.id|safe }}_comment" default="{{ answer.comment|safe }}"/>
 </div>
 </li>
 {% endfor %}
