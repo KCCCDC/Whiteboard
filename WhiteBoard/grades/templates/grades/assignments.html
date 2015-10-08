@@ -2,16 +2,18 @@
 
 {% block content %}
 <div class="container-fluid">
-<ul>
 {% for assignment in assignments %}
-	<li>
+<div class="panel panel-default">
+    <div class="panel-heading">
 	{% if role == "STUD" %}
 		<a href="submit_assignment?id={{ assignment.id }}">
 	{% else %}
 		<a href="edit_assignment?id={{ assignment.id }}">
 	{% endif %}
-	<h3>{{ assignment.title }}</h3>
+	<h3 class="panel-title">{{ assignment.title }}</h3>
 	</a>
+    </div>
+    <div class="panel-body">
 	<h4>{{ assignment.max_score }} points</h4>
 	<h4>Due {{ assignment.due_date }} </h4>
 	<p>{{ assignment.description }}</p>
@@ -22,11 +24,11 @@
 		<p><a href="{{ assignment.submission.file }}">{{ assignment.submission.file }}</a></p>
 		<p>{{ assignment.submission.submission_text }}</p>
 	{% endif %}
-	</li>
+	</div>
+</div>
 {% endfor %}
-</ul>
 
 <!-- TODO - only for PROF -->
-<a href="create_assignment"><button>Create Assignment</button></a>
+<a href="create_assignment"><button class="btn btn-default">Create Assignment</button></a>
 </div>
 {% endblock %}

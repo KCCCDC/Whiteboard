@@ -4,11 +4,14 @@
 {% csrf_token %}
 <ol>
 {% for question in questions %}
-<li><h4>{{ question.text }}</h4>
-<input type="text" name="{{ question.id }}"><br>
+<li>
+<div class="form-group">
+    <label for="{{ question.id }}">{{ question.text }}</label>
+    <input class="form-control" id="{{ question.id }}" type="text" name="{{ question.id }}">
+</div>
 </li>
 {% endfor %}
 </ol>
-<input type="submit" value="Submit"/>
+<button class="btn btn-default" type="submit">Submit</button>
 </form>
 {% endblock %}
