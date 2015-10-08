@@ -1,19 +1,29 @@
 <!DOCTYPE html>
+{% block header %}
+<link rel="stylesheet" href="/static/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+
+{% endblock %}
+
 {% block menubar %}
-<h1> Welcome to WhiteBoard!!! </h1>
-<ul>
-	<li><a href="home">Home</a></li>
-	<li><a href="announcements">Announcements</a></li>
-	<li><a href="calendar">Calendar</a></li>
-	<li><a href="forum">Forum</a></li>
-	<li><a href="assignments">Assignments</a></li>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+	            <li><a href="home">Home</a></li>
+	            <li><a href="announcements">Announcements</a></li>
+	            <li><a href="calendar">Calendar</a></li>
+	            <li><a href="forum">Forum</a></li>
+	            <li><a href="assignments">Assignments</a></li>
 <!-- TODO _ if STudent -->
-	<li><a href="grades">Grades</a></li>
-	<li><a href="exams">Exams</a></li>
-	{% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
-	<li><a href="submissions">Submissions</a></li>
-	{% endif %}
-</ul>
+	            <li><a href="grades">Grades</a></li>
+	            <li><a href="exams">Exams</a></li>
+	            {% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
+	                <li><a href="submissions">Submissions</a></li>
+	            {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
 {% endblock %}
 <div class="container-fluid">
 
