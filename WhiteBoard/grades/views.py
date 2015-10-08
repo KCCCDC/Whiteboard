@@ -228,12 +228,12 @@ def grades(request):
 	exam_grades = ExamSubmission.objects.filter(submitter=person)
 	for exam in exam_grades:
 		answers = ExamAnswer.objects.filter(examSubmission=exam)
-		exam_grades.score = 0
+		exam.score = 0
 		for answer in answers:
 			if answer.points != None:
-				exam_grades.score += int(answer.points)
+				exam.score += int(answer.points)
 			else:
-				exam_grades.score = None
+				exam.score = None
 				break
 	assignment_grades = Submission.objects.filter(submitter=person)
 	return render(request, "grades/grades.html", {'exam_grades' : exam_grades, \

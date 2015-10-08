@@ -13,8 +13,9 @@
 	            <li><a href="announcements">Announcements</a></li>
 	            <li><a href="calendar">Calendar</a></li>
 	            <li><a href="assignments">Assignments</a></li>
-<!-- TODO _ if STudent -->
+				{% if role == 'STUD'  or role == null%}
 	            <li><a href="grades">Grades</a></li>
+				{% endif %}
 	            <li><a href="exams">Exams</a></li>
 	            {% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
 	                <li><a href="submissions">Submissions</a></li>
