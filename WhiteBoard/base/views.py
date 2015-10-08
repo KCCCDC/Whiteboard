@@ -45,7 +45,6 @@ def index(request):
 	return login(request)
 
 def home(request):
-	# TODO
 	announcments = Announcement.objects.all() 
 	return render(request, 'home.html', {'announcements' : announcements, 'role' : getRole(request)})
 
