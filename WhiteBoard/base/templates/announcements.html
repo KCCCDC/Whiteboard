@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% autoescape off %}
 <ul>
 {% for announcement in announcements %}
 	<li>
-		<h3>{{ announcement.title }}</h3>
-		<h4>{{ announcement.date_posted }} by {{ announcement.poster.first_name }} {{ announcement.poster.last_name }}</h4>
-		<p>{{ announcement.content}}</p>
+		<h3>{{ announcement.title|safe }}</h3>
+		<h4>{{ announcement.date_posted|safe }} by {{ announcement.poster.first_name|safe }} {{ announcement.poster.last_name|safe }}</h4>
+		<p>{{ announcement.content|safe}}</p>
 	</li>
 {% endfor %}
 </ul>
 <button class="btn btn-default"><a href="create_announcement">Create Announcement</a></button>
+{% endautoescape %}
 {% endblock %}
-
