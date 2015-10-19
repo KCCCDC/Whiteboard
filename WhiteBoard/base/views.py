@@ -19,60 +19,60 @@ from os import listdir
 from os.path import isfile, join
 
 def logout(request):
-	authLogout(request)
-	return HttpResponseRedirect(reverse('base:index'))
+    authLogout(request)
+    return HttpResponseRedirect(reverse('base:index'))
 
 def login(request):
-	return render(request, 'users/login.html')
+    return render(request, 'users/login.html')
 
 def auth(request):
-	username = request.POST.get('username')
-	password = request.POST.get('password')
-	
-	user = authenticate(username=username, password=password)
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    
+    user = authenticate(username=username, password=password)
 
-	if user is not None:
-		authLogin(request, user)
-		return HttpResponseRedirect(reverse('base:home'))
+    if user is not None:
+        authLogin(request, user)
+        return HttpResponseRedirect(reverse('base:home'))
 
-	else:
-		return HttpResponseRedirect(reverse('base:invalidLogin'))
+    else:
+        return HttpResponseRedirect(reverse('base:invalidLogin'))
 
 def invalidLogin(request):
-	return render(request, 'users/invalidLogin.html')
+    return render(request, 'users/invalidLogin.html')
 
 def index(request):
-	return login(request)
+    return login(request)
 
 def home(request):
-	announcments = Announcement.objects.all() 
-	return render(request, 'home.html', {'announcements' : announcements, 'role' : getRole(request)})
+    announcments = Announcement.objects.all() 
+    return render(request, 'home.html', {'announcements' : announcements, 'role' : getRole(request)})
 
 def announcements(request):
-	announcements = Announcement.objects.all() 
-	return render(request, 'announcements.html', {'announcements' : announcements}) 
+    announcements = Announcement.objects.all() 
+    return render(request, 'announcements.html', {'announcements' : announcements}) 
 
 class CreateAnnouncementView(CreateView):
-	template_name='base_form.html'
-	model = Announcement
-	fields = ['title', 'content']
-	success_url = '/announcements'
+    template_name='base_form.html'
+    model = Announcement
+    fields = ['title', 'content']
+    success_url = '/announcements'
 
-	@method_decorator(csrf_exempt)
-	def dispatch(self, *args, **kwargs):
-		return super(CreateAnnouncementView, self).dispatch(*args, **kwargs)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(CreateAnnouncementView, self).dispatch(*args, **kwargs)
 
-	@method_decorator(login_required(login_url = '/'))
-	def get(self, request):
-		self.poster = Person.objects.get(user = request.user)
-		return super(CreateAnnouncementView, self).get(self, request)
-	
-	@method_decorator(login_required(login_url = '/'))
-	def post(self, request):
-		self.poster = Person.objects.get(user = request.user)
-		return super(CreateAnnouncementView, self).post(self, request)
-		
+    @method_decorator(login_required(login_url = '/'))
+    def get(self, request):
+        self.poster = Person.objects.get(user = request.user)
+        return super(CreateAnnouncementView, self).get(self, request)
+    
+    @method_decorator(login_required(login_url = '/'))
+    def post(self, request):
+        self.poster = Person.objects.get(user = request.user)
+        return super(CreateAnnouncementView, self).post(self, request)
+        
 
-	def form_valid(self, form):
-		form.instance.poster = self.poster
-		return super(CreateAnnouncementView, self).form_valid(form)
+    def form_valid(self, form):
+        form.instance.poster = self.poster
+        return super(CreateAnnouncementView, self).form_valid(form)

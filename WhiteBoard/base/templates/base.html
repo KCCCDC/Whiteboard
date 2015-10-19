@@ -9,17 +9,17 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <ul class="nav navbar-nav">
-	            <li><a href="home">Home</a></li>
-	            <li><a href="announcements">Announcements</a></li>
-	            <li><a href="calendar">Calendar</a></li>
-	            <li><a href="assignments">Assignments</a></li>
-				{% if role == 'STUD'  or role == null%}
-	            <li><a href="grades">Grades</a></li>
-				{% endif %}
-	            <li><a href="exams">Exams</a></li>
-	            {% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
-	                <li><a href="submissions">Submissions</a></li>
-	            {% endif %}
+                <li><a href="home">Home</a></li>
+                <li><a href="announcements">Announcements</a></li>
+                <li><a href="calendar">Calendar</a></li>
+                <li><a href="assignments">Assignments</a></li>
+                {% if role == 'STUD'  or role == null%}
+                <li><a href="grades">Grades</a></li>
+                {% endif %}
+                <li><a href="exams">Exams</a></li>
+                {% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
+                    <li><a href="submissions">Submissions</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

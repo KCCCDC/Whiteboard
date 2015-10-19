@@ -7,14 +7,14 @@
         <h2>Welcome to WhiteBoard!</h2>
     </div>
     {% for announcement in announcements %}
-	<div class="panel panel-default">
+    <div class="panel panel-default">
         <div class="panel-heading">
-		    <h3 class="panel-title">{{ announcement.title|safe }}</h3>
+            <h3 class="panel-title">{{ announcement.title|safe }}</h3>
         </div>
         <div class="panel-body">
-		    <h4>{{ announcement.date_posted|safe }} by {{ announcement.poster.first_name|safe }} {{ announcement.post.last_name|safe }}</h4>
-		    <p>{{ announcement.content|safe}}</p>
-	    </div>
+            <h4>{{ announcement.date_posted|safe }} by {{ announcement.poster.first_name|safe }} {{ announcement.post.last_name|safe }}</h4>
+            <p>{{ announcement.content|safe}}</p>
+        </div>
     </div>
     {% endfor %}
 </div>

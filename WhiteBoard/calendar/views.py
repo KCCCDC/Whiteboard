@@ -22,24 +22,24 @@ from os import listdir
 from os.path import isfile, join
 
 def calendar(request):
-	gradable_items = GradableItem.objects.all().order_by('due_date')
-	events = Event.objects.all().order_by('date')
-	return render(request, "calendar/calendar.html", {'gradable_items' : gradable_items, 'events' : events})
+    gradable_items = GradableItem.objects.all().order_by('due_date')
+    events = Event.objects.all().order_by('date')
+    return render(request, "calendar/calendar.html", {'gradable_items' : gradable_items, 'events' : events})
 
 @csrf_exempt
 def edit_event(request):
-	if request.method == "GET":
-		if 'event' not in request.method:
-			form = EventForm()
-		else:
-			event = Event.objects.get(id=request.GET['event'])
-			form = EventForm(instance=instance)
-		return render(request, "base_form.html", {'form' : form })
-	elif request.method == "POST":
-		if 'event' not in request.GET:
-			form = EventForm(request.POST)
-		else:
-			instance = Event.objects.get(id=request.GET['event'])
-			form = EventForm(request.POST, instance=instance)
-		form.save()
-		return HttpResponseRedirect(reverse("calendar:calendar"))
+    if request.method == "GET":
+        if 'event' not in request.method:
+            form = EventForm()
+        else:
+            event = Event.objects.get(id=request.GET['event'])
+            form = EventForm(instance=instance)
+        return render(request, "base_form.html", {'form' : form })
+    elif request.method == "POST":
+        if 'event' not in request.GET:
+            form = EventForm(request.POST)
+        else:
+            instance = Event.objects.get(id=request.GET['event'])
+            form = EventForm(request.POST, instance=instance)
+        form.save()
+        return HttpResponseRedirect(reverse("calendar:calendar"))

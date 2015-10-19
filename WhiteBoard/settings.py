@@ -37,9 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'WhiteBoard.base',
-	'WhiteBoard.calendar',
-	'WhiteBoard.grades',
+    'WhiteBoard.base',
+    'WhiteBoard.calendar',
+    'WhiteBoard.grades',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'WhiteBoard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-	'NAME': 'whiteboard',
-	'USER': 'root',
-	'PASSWORD': 'cdc',
-	'HOST': '',
-	'POST': '',
+    'NAME': 'whiteboard',
+    'USER': 'root',
+    'PASSWORD': 'cdc',
+    'HOST': '',
+    'POST': '',
     }
 }
 
@@ -109,5 +109,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-	os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static"),
 )

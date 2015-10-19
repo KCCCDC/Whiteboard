@@ -2,9 +2,9 @@
 
 {% block menubar %}
 <head>
-	<title>{{title|safe}}</title>
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}bootstrap-3.3.2-dist/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}base_css.css">
+    <title>{{title|safe}}</title>
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}bootstrap-3.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}base_css.css">
 </head>
 <!-- Empty menu bar for prettiness reasons -->
 <nav class="navbar navbar-default" style="padding:8px;">
@@ -25,11 +25,11 @@
 {% autoescape off %}
 
 <div class="panel panel-default">
-	<div class="panel-heading">
-			<h3 class="panel-title">Permission Denied</h3>
-	</div>
-	<div class="panel-body">
-	<p>You must be logged in to see this page. Please log in below or register for a new account.</p><br>
+    <div class="panel-heading">
+            <h3 class="panel-title">Permission Denied</h3>
+    </div>
+    <div class="panel-body">
+    <p>You must be logged in to see this page. Please log in below or register for a new account.</p><br>
 
 
 <form action= "{% url 'base:authView' %}" method= "POST">

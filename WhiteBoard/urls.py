@@ -3,7 +3,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-	url(r'^', include('WhiteBoard.base.urls', namespace='base')),
-	url(r'^', include('WhiteBoard.grades.urls', namespace='grades')),
-	url(r'^', include('WhiteBoard.calendar.urls', namespace='calendar')),
+    url(r'^', include('WhiteBoard.base.urls', namespace='base')),
+    url(r'^', include('WhiteBoard.grades.urls', namespace='grades')),
+    url(r'^', include('WhiteBoard.calendar.urls', namespace='calendar')),
 ]
