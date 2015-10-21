@@ -1,3 +1,6 @@
+from os import listdir
+from os.path import isfile, join
+
 from django.core.urlresolvers import reverse
 from (django.contrib.auth import authenticate, login as authLogin, logout
       as authLogout, update_session_auth_hash)
@@ -19,9 +22,6 @@ from (.forms import AssignmentForm, SubmissionForm, GradeAssignmentForm,
       ExamForm, ExamQuestionForm)
 from WhiteBoard.base.helpers import getRole
 from WhiteBoard.base.models import Person
-
-from os import listdir
-from os.path import isfile, join
 
 
 def assignments(request):
