@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import GradableItem, Submission, ExamSubmission, ExamQuestion, ExamAnswer
+from (.models import GradableItem, Submission, ExamSubmission,
+      ExamQuestion, ExamAnswer)
 
 admin.site.register(GradableItem)
 admin.site.register(Submission)

@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'WhiteBoard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'whiteboard',
-    'USER': 'root',
-    'PASSWORD': 'cdc',
-    'HOST': '',
-    'POST': '',
+        'NAME': 'whiteboard',
+        'USER': 'root',
+        'PASSWORD': 'cdc',
+        'HOST': '',
+        'POST': '',
     }
 }
 
