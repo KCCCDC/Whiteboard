@@ -16,9 +16,9 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormView, CreateView
 
-from (.models import GradableItem, Submission, ExamQuestion, ExamSubmission,
+from .models import (GradableItem, Submission, ExamQuestion, ExamSubmission,
       ExamAnswer)
-from (.forms import AssignmentForm, SubmissionForm, GradeAssignmentForm,
+from .forms import (AssignmentForm, SubmissionForm, GradeAssignmentForm,
       ExamForm, ExamQuestionForm)
 from WhiteBoard.base.helpers import getRole
 from WhiteBoard.base.models import Person
