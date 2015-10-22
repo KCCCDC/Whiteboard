@@ -2,11 +2,11 @@ from os import listdir
 from os.path import isfile, join
 
 from django.core.urlresolvers import reverse
-from (django.contrib.auth import authenticate, login as authLogin, logout
-      as authLogout, update_session_auth_hash)
+from django.contrib.auth import (authenticate, login as authLogin, logout
+     as authLogout, update_session_auth_hash)
 from django.contrib.auth.decorators import login_required
-from (django.contrib.auth.hashers import check_password, make_password,
-      is_password_usable)
+from django.contrib.auth.hashers import (check_password, make_password,
+     is_password_usable)
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
