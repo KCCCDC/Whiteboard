@@ -20,13 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ca+@mv=@rbyklv*3%^!gd)%_6zrb$v0^pf%#&&$(4&@xc=je6@'
+with open('secret_key') as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'WhiteBoard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'whiteboard',
-        'USER': 'root',
-        'PASSWORD': 'cdc',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '',
         'POST': '',
     }

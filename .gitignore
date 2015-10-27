@@ -1,2 +1,4 @@
 *.pyc
 *.swp
+WhiteBoard/settings.py
+secret_key
