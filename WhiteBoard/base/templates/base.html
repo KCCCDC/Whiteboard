@@ -1,42 +1,76 @@
 <!DOCTYPE html>
-{% block header %}
-<link rel="stylesheet" href="/static/bootstrap-3.3.5-dist/css/bootstrap.min.css">
 
-{% endblock %}
 
-{% block menubar %}
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul class="nav navbar-nav">
-                <li><a href="home">Home</a></li>
-                <li><a href="announcements">Announcements</a></li>
-                <li><a href="calendar">Calendar</a></li>
-                <li><a href="assignments">Assignments</a></li>
-                {% if role == 'STUD'  or role == null%}
-                <li><a href="grades">Grades</a></li>
-                {% endif %}
-                <li><a href="exams">Exams</a></li>
-                {% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
-                    <li><a href="submissions">Submissions</a></li>
-                {% endif %}
-            </ul>
+<html>
+    <!-- added in opening HTML tag -->
+    {% block header %}
+    <head>
+        <title>{{title|safe}}</title>
+        <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}bootstrap-3.3.2-dist/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}base_css.css">
+        
+        <style>
+            nav.navbar ul li.nav-jh {
+                display:inline-block;
+                max-width:250px;
+                width:200px;
+            }
+            div.container {
+                max-width:960px;
+                margin: 0 auto;
+                background-color:#fff;
+            }
+            body {
+                background-color: #ccc;
+            }
+        </style>
+    </head>
+    <!-- removed link file, added in header block from invalidLogin file -->
+
+    {% endblock %}
+    <body>
+        <div class="container">
+        {% block menubar %}
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <ul class="nav navbar-nav">
+                            <li><a href="home">Home</a></li>
+                            <li><a href="announcements">Announcements</a></li>
+                            <li><a href="calendar">Calendar</a></li>
+                            <li><a href="assignments">Assignments</a></li>
+                            {% if role == 'STUD'  or role == null%}
+                            <!-- Why do we need to accept null role? -->
+                            <li><a href="grades">Grades</a></li>
+                            {% endif %}
+                            <li><a href="exams">Exams</a></li>
+                            {% if role == 'PROF' or role == 'TA' or role == 'AD' or role == null %}
+                            <!-- why would a null role have submissions, what is AD? -->
+                                <li><a href="submissions">Submissions</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-10">
+                    {% block content %}
+
+                    Insert Content Here!!!
+                    {% endblock %}
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</nav>
-{% endblock %}
-<div class="container-fluid">
+<!-- added in closing html tag -->
 
-<div class="row">
-<div class="col-sm-1">
-</div>
-<div class="col-sm-10">
-{% block content %}
-
-Insert Content Here!!!
-{% endblock %}
-</div>
-<div class="col-sm-1"></div>
-</div></div>
-
-</body>
+    </body>
+    
+</html>

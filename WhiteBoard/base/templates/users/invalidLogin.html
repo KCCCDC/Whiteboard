@@ -1,39 +1,39 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
+
+<!-- removed duplicate doctype tag -->
+
 {% block menubar %}
-<head>
-    <title>{{title|safe}}</title>
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}bootstrap-3.3.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}base_css.css">
-</head>
-
-
 
 <!-- Empty menu bar for prettiness reasons -->
 <nav class="navbar navbar-default" style="padding:8px;">
-<div class="container-fluid">
-<div class="navbar-header">
-<div class="nav navbar-nav">
-<!-- Empty on purpose. Could add a logo later. -->
-{% load static %}
-<img src="{% static 'logo-med-lilac.png' %}" alt="Whiteboard">
-</div>
-</div>
-</div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="nav navbar-nav">
+            <!-- Empty on purpose. Could add a logo later. -->
+            {% load static %}
+                <img src="{% static 'logo-med-lilac.png' %}" alt="Whiteboard">
+                <!-- worried about the img src dynamic content, suggest to use something static, remove completely, or make absolutely sure this is SAFE! -->
+            </div>
+        </div>
+    </div>
 </nav>
 {% endblock %}
 
 {% block content %}
 {% autoescape off %}
+<!-- WHY IS AUTOESCAPING OFF? Is this neccessary, seems dangerous -->
 <div class="panel panel-default">
     <div class="panel-heading">
-            <h3 class="panel-title">Permission Denied</h3>
+        <h3 class="panel-title">Permission Denied</h3>
     </div>
     <div class="panel-body">
-    <p>That was not a correct username or password.</p>
-    
-<br>
-<p><a href="{% url 'base:login' %}"><button class="btn btn-default">Click here to log in again</button></a></p>
+        <p>That was not a correct username or password.</p>
+        <br>
+        <p>
+            <a href="{% url 'base:login' %}"><button class="btn btn-default">Click here to log in again</button></a>
+        </p>
+        <!-- worried about the href dynamic marker? why not use static, we know where the home page is -->
+    </div>
 </div>
 {% endautoescape %}
 {% endblock %}
