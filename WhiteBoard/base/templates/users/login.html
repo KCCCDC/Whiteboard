@@ -1,12 +1,6 @@
 {% extends "base.html" %}
-
-{% block menubar %}
-{% endblock %}
-
-
 {% block content %}
-{% autoescape off %}
-<!-- why is autoescaping off, is this necessary? seems dangerous -->
+{% autoescape on %}
 {% if form.error %}
 <p class="error">Sorry, that was not a valid username or password.</p>
 {% endif %}
@@ -33,6 +27,6 @@
         <a href="{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
 
     </div>
+</div>
 {% endautoescape %}
 {% endblock %}
-

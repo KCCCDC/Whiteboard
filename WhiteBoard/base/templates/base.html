@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-
-
 <html>
+    {% autoescape on %}
     {% block header %}
     <head>
         <title>{{title|safe}}</title>
@@ -51,4 +50,5 @@
             </div>
         </div>
     </body>
+    {% endautoescape %}
 </html>

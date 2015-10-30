@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block menubar %}
+{% autoescape on %}
 <nav class="navbar navbar-default" style="padding:8px;">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -10,9 +11,10 @@
         </div>
     </div>
 </nav>
+{% endautoescape %}
 {% endblock %}
 {% block content %}
-{% autoescape off %}
+{% autoescape on %}
 <div class="panel panel-default">
     <div class="panel-heading">
             <h3 class="panel-title">Permission Denied</h3>

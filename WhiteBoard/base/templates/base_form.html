@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-{% autoescape off %}
+{% autoescape on %}
 <form action="" method="post">
     {{ form.as_p|safe }}
     <button class="btn btn-default" type="submit">
