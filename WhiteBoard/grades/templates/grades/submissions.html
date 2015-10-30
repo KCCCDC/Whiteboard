@@ -3,40 +3,48 @@
 {% block content %}
 {% autoescape off %}
 <form method="" action="" id="assignment_selector">
-<div class="form-group">
-    <select form='assignment_selector' name='assignment'>
-    {% for assignment in assignments %}
-        <option value='{{ assignment.id|safe }}'>{{ assignment.title|safe }}</option>
-    {% endfor %}
-    </select>
-</div>
-<br>
-<div class="form-group">
-    <button type="submit" class="btn btn-default">Submit</button>
-</div>
+    <div class="form-group">
+        <select form='assignment_selector' name='assignment'>
+        {% for assignment in assignments %}
+            <option value='{{ assignment.id|safe }}'>{{ assignment.title|safe }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <br>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">Submit</button>
+    </div>
 </form>
 
 {% if assignment != '' %}
 <table class="table table-striped">
-<tr>
-    <td>Submitter</td>
-    <td>Date Submitted</td>
-    <td>Score</td>
-    <td>Grader</td>
-</tr>
-{% for submission in submissions %}
-<tr>
-    <td><a href="submissions?submission={{ submission.id|safe }}">
-    {{ submission.submitter.user.first_name|safe }} {{ submission.submitter.user.last_name|safe }}</a></td>
-    <td><a href="submissions?submission={{ submission.id|safe }}">
-    {{ submission.date_submitted|safe }}</a></td>
-    <td><a href="submissions?submission={{ submission.id|safe }}">
-    {% if score != "" %}{{ submission.score|safe }}{% else %}-{% endif %}</a></td>
-    <td><a href="submissions?submission={{ submission.id|safe }}">
-        {% if submission.grader != "" %}{{ submission.grader.user.first_name|safe }} {{submission.grader.user.last_name|safe }}
-        {% else %}-{% endif %}</a></td>
-</tr>
-</a>
+    <tr>
+        <td>Submitter</td>
+        <td>Date Submitted</td>
+        <td>Score</td>
+        <td>Grader</td>
+    </tr>
+    {% for submission in submissions %}
+    <tr>
+        <td>
+            <a href="submissions?submission={{ submission.id|safe }}">
+        {{ submission.submitter.user.first_name|safe }} {{ submission.submitter.user.last_name|safe }}</a>
+        </td>
+        <td>
+            <a href="submissions?submission={{ submission.id|safe }}">
+        {{ submission.date_submitted|safe }}</a>
+        </td>
+        <td>
+            <a href="submissions?submission={{ submission.id|safe }}">
+        {% if score != "" %}{{ submission.score|safe }}{% else %}-{% endif %}</a>
+        </td>
+        <td>
+            <a href="submissions?submission={{ submission.id|safe }}">
+            {% if submission.grader != "" %}{{ submission.grader.user.first_name|safe }} {{submission.grader.user.last_name|safe }}
+            {% else %}-{% endif %}</a>
+        </td>
+    </tr>
+</table>
 {% endfor %}
 {% endif %}
 {% endautoescape %}

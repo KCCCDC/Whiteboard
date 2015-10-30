@@ -2,31 +2,12 @@
 
 
 <html>
-    <!-- added in opening HTML tag -->
     {% block header %}
     <head>
         <title>{{title|safe}}</title>
-        <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}bootstrap-3.3.2-dist/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}base_css.css">
-        
-        <style>
-            nav.navbar ul li.nav-jh {
-                display:inline-block;
-                max-width:250px;
-                width:200px;
-            }
-            div.container {
-                max-width:960px;
-                margin: 0 auto;
-                background-color:#fff;
-            }
-            body {
-                background-color: #ccc;
-            }
-        </style>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css' %}">
     </head>
-    <!-- removed link file, added in header block from invalidLogin file -->
-
     {% endblock %}
     <body>
         <div class="container">
@@ -69,8 +50,5 @@
                 </div>
             </div>
         </div>
-<!-- added in closing html tag -->
-
     </body>
-    
 </html>

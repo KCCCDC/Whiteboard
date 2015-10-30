@@ -2,17 +2,17 @@
 {% block content %}
 {% autoescape off %}
 <form action="" method="post">
-<ol>
-{% for question in questions %}
-<li>
-<div class="form-group">
-    <label for="{{ question.id|safe }}">{{ question.text|safe }}</label>
-    <input class="form-control" id="{{ question.id|safe }}" type="text" name="{{ question.id|safe }}">
-</div>
-</li>
-{% endfor %}
-</ol>
-<button class="btn btn-default" type="submit">Submit</button>
+    <ol>
+    {% for question in questions %}
+        <li>
+            <div class="form-group">
+                <label for="{{ question.id|safe }}">{{ question.text|safe }}</label>
+                <input class="form-control semiColon required" id="{{ question.id|safe }}" type="text" name="{{ question.id|safe }}">
+            </div>
+        </li>
+    {% endfor %}
+    </ol>
+    <button class="btn btn-default" type="submit">Submit</button>
 </form>
 {% endautoescape %}
 {% endblock %}

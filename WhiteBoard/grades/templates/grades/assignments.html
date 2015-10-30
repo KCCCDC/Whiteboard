@@ -3,34 +3,47 @@
 {% block content %}
 {% autoescape off %}
 <div class="container-fluid">
-{% for assignment in assignments %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-    {% if role == "STUD" %}
-        <a href="submit_assignment?id={{ assignment.id|safe }}">
-    {% else %}
-        <a href="edit_assignment?id={{ assignment.id|safe }}">
-    {% endif %}
-    <h3 class="panel-title">{{ assignment.title|safe }}</h3>
-    </a>
+    {% for assignment in assignments %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        {% if role == "STUD" %}
+            <a href="submit_assignment?id={{ assignment.id|safe }}">
+                <h3 class="panel-title">{{ assignment.title|safe }}</h3>
+            </a>
+        {% elif role == 'PROF' %}
+            <a href="edit_assignment?id={{ assignment.id|safe }}">
+                <h3 class="panel-title">{{ assignment.title|safe }}</h3>
+            </a>
+        {% else %}
+            <h3 class="panel-title">No assignments available.</h3>
+        {% endif %}
+        </div>
+        
+        <div class="panel-body">
+            <h4>{{ assignment.max_score|safe }} points</h4>
+            <h4>Due {{ assignment.due_date|safe }} </h4>
+            <p>{{ assignment.description|safe }}</p>
+            <a href="{{ assignment.file|safe }}">{{ assignment.file|safe }}</a>
+            {% if role == 'STUD' and assignment.submission != '' %}
+                <h3>Submission</h3>
+                <h4>Submitted on: {{ assignment.submission.date_submitted|safe }}</h4>
+                <p>
+                    <a href="{{ assignment.submission.file|safe }}">{{ assignment.submission.file|safe }}</a></p>
+                <p>{{ assignment.submission.submission_text|safe }}</p>
+            {% endif %}
+        </div>
     </div>
-    <div class="panel-body">
-    <h4>{{ assignment.max_score|safe }} points</h4>
-    <h4>Due {{ assignment.due_date|safe }} </h4>
-    <p>{{ assignment.description|safe }}</p>
-    <a href="{{ assignment.file|safe }}">{{ assignment.file|safe }}</a>
-    {% if role == 'STUD' and assignment.submission != '' %}
-        <h3>Submission</h3>
-        <h4>Submitted on: {{ assignment.submission.date_submitted|safe }}</h4>
-        <p><a href="{{ assignment.submission.file|safe }}">{{ assignment.submission.file|safe }}</a></p>
-        <p>{{ assignment.submission.submission_text|safe }}</p>
-    {% endif %}
-    </div>
-</div>
 {% endfor %}
 
-<!-- TODO - only for PROF -->
-<a href="create_assignment"><button class="btn btn-default">Create Assignment</button></a>
+    <!-- TODO - only for PROF -->
+    {% if role == 'PROF' %}
+    <div class="panel panel-default">
+        <a href="create_assignment">
+            <button class="btn btn-default">Create Assignment</button>
+        </a>
+    </div>
+    {% endif %}
+    <!-- added in create exams ONLY for prof, and not open to students or others -->
 </div>
 {% endautoescape %}
 {% endblock %}

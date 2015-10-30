@@ -1,51 +1,55 @@
 {% extends "base.html" %}
-
 {% block menubar %}
-<head>
-    <title>{{title|safe}}</title>
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}bootstrap-3.3.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL|safe}}base_css.css">
-</head>
-<!-- Empty menu bar for prettiness reasons -->
 <nav class="navbar navbar-default" style="padding:8px;">
-<div class="container-fluid">
-<div class="navbar-header">
-<div class="nav navbar-nav">
-<!-- Empty on purpose. Could add a logo later. -->
-{% load static %}
-<img src="{% static 'logo-med-lilac.png' %}" alt="Whiteboard">
-</div>
-</div>
-</div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="nav navbar-nav">
+                {% load static %}
+                <img src="{% static 'logo.png' %}" alt="Whiteboard">
+            </div>
+        </div>
+    </div>
 </nav>
 {% endblock %}
-
-
 {% block content %}
 {% autoescape off %}
-
 <div class="panel panel-default">
     <div class="panel-heading">
             <h3 class="panel-title">Permission Denied</h3>
     </div>
     <div class="panel-body">
-    <p>You must be logged in to see this page. Please log in below or register for a new account.</p><br>
-
-
-<form action= "{% url 'base:authView' %}" method= "POST">
-{% csrf_token %}
-
-<label for ="username"> <b>Username:</b> </label><input type="text" name="username" value="" id="username"><br>
-<label for ="password"> <b>Password:</b> </label><input type="password" name="password" value="" id="password"><br>
-<br>
-<input type= "submit" value="Log in" class="btn btn-default">
-</form>
-<br>
-
-<a href="{% url 'base:register' %}"><button type="button" class="btn btn-default">Click here to register for a new account</button></a>
-
-<a href = "{% url 'base:index' %}"><button type="button" class="btn btn-default">Go back to index page</button></a>
-
+        <p>
+            You must be logged in to see this page.
+            Please log in below or register for a new account.
+        </p>
+        <br>
+        <form action= "{% url 'base:authView' %}" method= "POST">
+        {% csrf_token %}
+        <label for ="username">
+            <b>Username:</b>
+        </label>
+        <input type="text" name="username" value="" id="username">
+        <br>
+        <label for ="password">
+            <b>Password:</b> 
+        </label>
+        <input type="password" name="password" value="" id="password">
+        <br>
+        <br>
+        <input type= "submit" value="Log in" class="btn btn-default">
+        </form>
+        <br>
+        <a href="{% url 'base:register' %}">
+            <button type="button" class="btn btn-default">
+                Click here to register for a new account
+            </button>
+        </a>
+        <a href = "{% url 'base:index' %}">
+            <button type="button" class="btn btn-default">
+                Go back to index page
+            </button>
+        </a>
+    </div>
 </div>
 {% endautoescape %}
 {% endblock %}

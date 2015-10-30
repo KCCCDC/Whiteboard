@@ -2,15 +2,21 @@
 {% block content %}
 {% autoescape off %}
 <form action="" method="">
-{{ form.as_p|safe }}
-<button class="btn btn-default" type="submit">Save Changes</button>
+    {{ form.as_p|safe }}
+    <button class="btn btn-default" type="submit">Save Changes</button>
 </form>
-<a href="view_examsubmissions?exam={{ exam.id|safe }}"><button class="btn btn-default">View Exam Submissions</button></a>
+<a href="view_examsubmissions?exam={{ exam.id|safe }}">
+    <button class="btn btn-default">View Exam Submissions</button>
+</a>
 <ol>
-{% for question in questions %}
-    <a href="edit_question?question={{ question.id|safe }}"><li>{{ question.text|safe}}, {{ question.max_points|safe}} points</li></a>
-{% endfor %}
+    {% for question in questions %}
+    <a href="edit_question?question={{ question.id|safe }}">
+        <li>{{ question.text|safe}}, {{ question.max_points|safe}} points</li>
+    </a>
+    {% endfor %}
 </ol>
-<a href="add_question?exam={{ exam.id|safe }}"><button class="btn btn-default">Add Question</button></a>
+<a href="add_question?exam={{ exam.id|safe }}">
+    <button class="btn btn-default">Add Question</button>
+</a>
 {% endautoescape %}
 {% endblock %}

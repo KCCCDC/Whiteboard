@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 {% autoescape off %}
 {% for announcement in announcements %}
@@ -13,6 +12,10 @@
     </div>
 </div>
 {% endfor %}
-<button class="btn btn-default"><a href="create_announcement">Create Announcement</a></button>
+<button class="btn btn-default">
+    <a href="create_announcement">
+        Create Announcement
+    </a>
+</button>
 {% endautoescape %}
 {% endblock %}
