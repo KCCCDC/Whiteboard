@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-{% autoescape off %}
+{% autoescape on %}
 <h2>Exams</h2>
     <table class="table table-striped">
         <tr>
@@ -10,18 +10,19 @@
             <td>Date Submitted</td>
         </tr>
         {% for exam_grade in exam_grades %}
-        <tr>
-            <td>{{ exam_grade.gradableItem.title|safe }}</td>
-            {% if exam_grade.score != "" and exam_grade.score != None %}
-                <td>{{ exam_grade.score|safe }}</td>
-            {% else %}
-                <td>-</td>
-            {% endif %}
-            <td>{{ exam_grade.gradableItem.max_score|safe }}</td>
-            <td>{{ exam_grade.date_submitted|safe }}</td>
-        </tr>
+            <tr>
+                <td>{{ exam_grade.gradableItem.title|safe }}</td>
+                {% if exam_grade.score != "" and exam_grade.score != None %}
+                    <td>{{ exam_grade.score|safe }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+                <td>{{ exam_grade.gradableItem.max_score|safe }}</td>
+                <td>{{ exam_grade.date_submitted|safe }}</td>
+            </tr>
         {% endfor %}
     </table>
+<br>
 <h2>Assignments</h2>
 <table class="table table-striped">
     <tr>
@@ -31,17 +32,17 @@
         <td>Date Submitted</td>
     </tr>
     {% for grade in assignment_grades %}
-    <tr>
-        <td>{{ grade.gradableItem.title|safe }}</td>
-        {% if grade.score != '' and grade.score != None %}
-            <td>{{ grade.score|safe }}</td>
-        {% else %}
-        <td>-</td>
-        {% endif %}
-        <td>{{ grade.gradableItem.max_score|safe }}</td>
-        <td>{{ grade.date_submitted|safe }}</td>
-    </tr>
-{% endfor %}
+        <tr>
+            <td>{{ grade.gradableItem.title|safe }}</td>
+            {% if grade.score != '' and grade.score != None %}
+                <td>{{ grade.score|safe }}</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            <td>{{ grade.gradableItem.max_score|safe }}</td>
+            <td>{{ grade.date_submitted|safe }}</td>
+        </tr>
+    {% endfor %}
 </table>
 {% endautoescape %}
 {% endblock %}

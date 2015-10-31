@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% autoescape off %}
+{% autoescape on %}
 <div class="container-fluid">
-    {% for assignment in assignments %}
+{% for assignment in assignments %}
     <div class="panel panel-default">
         <div class="panel-heading">
         {% if role == "STUD" %}
@@ -34,16 +34,13 @@
         </div>
     </div>
 {% endfor %}
-
-    <!-- TODO - only for PROF -->
     {% if role == 'PROF' %}
-    <div class="panel panel-default">
-        <a href="create_assignment">
-            <button class="btn btn-default">Create Assignment</button>
-        </a>
-    </div>
+        <div class="panel panel-default">
+            <a href="create_assignment">
+                <button class="btn btn-default">Create Assignment</button>
+            </a>
+        </div>
     {% endif %}
-    <!-- added in create exams ONLY for prof, and not open to students or others -->
 </div>
 {% endautoescape %}
 {% endblock %}

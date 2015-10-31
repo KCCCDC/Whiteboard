@@ -2,10 +2,10 @@ from os import listdir
 from os.path import isfile, join
 
 from django.contrib.auth import (authenticate, login as authLogin, logout
-     as authLogout, update_session_auth_hash)
+                                 as authLogout, update_session_auth_hash)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import (check_password, make_password,
-     is_password_usable)
+                                         is_password_usable)
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -13,7 +13,6 @@ from django.shortcuts import render
 from django.template import RequestContext, loader
 from django.templatetags.static import static
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormView, CreateView
 
 from .helpers import getRole
@@ -43,7 +42,9 @@ def auth(request):
 
 
 def invalidLogin(request):
-    return render(request, 'users/invalidLogin.html')
+    return render(request, 'users/invalidLogin.html', {
+        'role': getRole(request)
+    })
 
 
 def index(request):
@@ -61,7 +62,8 @@ def home(request):
 def announcements(request):
     announcements = Announcement.objects.all()
     return render(request, 'announcements.html', {
-        'announcements': announcements
+        'announcements': announcements,
+        'role': getRole(request)
     })
 
 
@@ -71,7 +73,6 @@ class CreateAnnouncementView(CreateView):
     fields = ['title', 'content']
     success_url = '/announcements'
 
-    @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         return super(CreateAnnouncementView, self).dispatch(*args, **kwargs)
 

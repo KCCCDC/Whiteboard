@@ -3,23 +3,22 @@ from os.path import isfile, join
 
 from django.core.urlresolvers import reverse
 from django.contrib.auth import (authenticate, login as authLogin, logout
-     as authLogout, update_session_auth_hash)
+                                 as authLogout, update_session_auth_hash)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import (check_password, make_password,
-     is_password_usable)
+                                         is_password_usable)
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext, loader
 from django.templatetags.static import static
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormView, CreateView
 
 from .models import (GradableItem, Submission, ExamQuestion, ExamSubmission,
-      ExamAnswer)
+                     ExamAnswer)
 from .forms import (AssignmentForm, SubmissionForm, GradeAssignmentForm,
-      ExamForm, ExamQuestionForm)
+                    ExamForm, ExamQuestionForm)
 from WhiteBoard.base.helpers import getRole
 from WhiteBoard.base.models import Person
 
@@ -39,7 +38,6 @@ def assignments(request):
     })
 
 
-@csrf_exempt
 def submit_assignment(request):
     id = request.GET['id']
     instance = (Submission.objects.filter(gradableItem_id=id,
@@ -50,8 +48,9 @@ def submit_assignment(request):
         else:
             form = SubmissionForm(instance=instance[0])
         return render(request, "file_upload_form.html", {
-                        'form': form
-                      })
+            'form': form,
+            'role': getRole(request)
+        })
     elif request.method == 'POST':
         if instance.count() == 0:
             form = SubmissionForm(request.POST, request.FILES)
@@ -64,15 +63,15 @@ def submit_assignment(request):
         return HttpResponseRedirect(reverse('grades:assignments'))
 
 
-@csrf_exempt
 def edit_assignment(request):
     id = request.GET['id']
     instance = GradableItem.objects.get(id=id)
     if request.method == 'GET':
         form = AssignmentForm(instance=instance)
         return (render(request, "file_upload_form.html", {
-                                    'form': form
-                                }))
+            'form': form,
+            'role': getRole(request)
+        }))
     elif request.method == 'POST':
         form = AssignmentForm(request.POST, request.FILES, instance=instance)
         form.save()
@@ -85,7 +84,6 @@ class CreateAssignmentView(CreateView):
     fields = ['max_score', 'title', 'description', 'due_date', 'file']
     success_url = '/assignments'
 
-    @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         return super(CreateAssignmentView, self).dispatch(*args, **kwargs)
 
@@ -94,16 +92,16 @@ class CreateAssignmentView(CreateView):
         return super(CreateAssignmentView, self).form_valid(form)
 
 
-@csrf_exempt
 def submissions(request):
     if 'submission' in request.GET and request.method == "GET":
         submission = request.GET['submission']
         instance = Submission.objects.get(id=submission)
         form = GradeAssignmentForm(instance=instance)
         return (render(request, "grades/grade_assignment.html", {
-                                    'form': form,
-                                    'submission': instance
-                                }))
+            'form': form,
+            'submission': instance,
+            'role': getRole(request)
+        }))
     elif 'submission' in request.GET and request.method == "POST":
         instance = Submission.objects.get(id=request.GET['submission'])
         form = GradeAssignmentForm(request.POST, instance=instance)
@@ -120,13 +118,13 @@ def submissions(request):
         submissions = Submission.objects.filter(gradableItem_id=assignment)
     assignments = GradableItem.objects.filter(type="HMWK")
     return (render(request, 'grades/submissions.html', {
-                                'assignment': assignment,
-                                'submissions': submissions,
-                                'assignments': assignments
-                            }))
+        'assignment': assignment,
+        'submissions': submissions,
+        'assignments': assignments,
+        'role': getRole(request)
+    }))
 
 
-@csrf_exempt
 def exams(request):
     if request.method == "GET":
         if 'exam' in request.GET:
@@ -134,10 +132,11 @@ def exams(request):
             form = ExamForm(instance=instance)
             questions = ExamQuestion.objects.filter(gradableItem=instance)
             return (render(request, 'grades/exam_form.html', {
-                                        'form': form,
-                                        'exam': instance,
-                                        'questions': questions
-                                    }))
+                'form': form,
+                'exam': instance,
+                'questions': questions,
+                'role': getRole(request)
+            }))
         else:
             exams = GradableItem.objects.filter(type="EXAM")
             person = Person.objects.get(user=request.user)
@@ -153,9 +152,9 @@ def exams(request):
                 else:
                     exam.submission = ''
             return (render(request, 'grades/exams.html', {
-                                        'exams': exams,
-                                        'role': getRole(request)
-                                    }))
+                'exams': exams,
+                'role': getRole(request)
+            }))
     elif request.method == "POST":
         if 'exam' in request.GET:
             print "HI"
@@ -164,25 +163,26 @@ def exams(request):
             form.save()
             questions = ExamQuestion.objects.filter(gradableItem=instance)
             return (render(request, 'grades/exam_form.html', {
-                                        'form': form,
-                                        'exam': form.instance,
-                                        'questions': questions
-                                    }))
+                'form': form,
+                'exam': form.instance,
+                'questions': questions,
+                'role': getRole(request)
+            }))
         else:
             exams = GradableItem.objects.filter(type="EXAM")
             return (render(request, 'grades/exams.html', {
-                                        'exams': exams,
-                                        'role': getRole(request)
-                                    }))
+                'exams': exams,
+                'role': getRole(request)
+            }))
 
 
-@csrf_exempt
 def create_exam(request):
     if request.method == "GET":
         form = ExamForm()
         return (render(request, 'base_form.html', {
-                                    'form': form
-                                }))
+            'form': form,
+            'role': getRole(request)
+        }))
     elif request.method == "POST":
         form = ExamForm(request.POST)
         form.instance.type = "EXAM"
@@ -191,18 +191,21 @@ def create_exam(request):
         return HttpResponseRedirect(url + "?exam=" + str(form.instance.id))
 
 
-@csrf_exempt
 def edit_question(request):
     if request.method == "GET":
         if 'question' in request.GET:
             instance = ExamQuestion.objects.get(id=request.GET['question'])
             form = ExamQuestionForm(instance=instance)
             return (render(request, 'base_form.html', {
-                                        'form': form
-                                    }))
+                'form': form,
+                'role': getRole(request)
+            }))
         elif 'exam' in request.GET:
             form = ExamQuestionForm()
-            return render(request, 'base_form.html', {'form': form})
+            return render(request, 'base_form.html', {
+                'form': form,
+                'role': getRole(request)
+            })
     if request.method == "POST":
         if 'question' in request.GET:
             instance = ExamQuestion.objects.get(id=request.GET['question'])
@@ -221,7 +224,6 @@ def edit_question(request):
                     url + "?exam=" + str(form.instance.gradableItem_id)))
 
 
-@csrf_exempt
 def take_exam(request):
     if 'exam' not in request.GET:
         return HttpResponseRedirect(reverse('grades:exams'))
@@ -229,8 +231,9 @@ def take_exam(request):
         questions = (ExamQuestion.objects.filter(
                      gradableItem_id=request.GET['exam']))
         return (render(request, 'grades/take_exam.html', {
-                                    'questions': questions
-                                }))
+            'questions': questions,
+            'role': getRole(request)
+        }))
     elif request.method == "POST":
         submitter = Person.objects.get(user=request.user)
         examSubmission = ExamSubmission(
@@ -267,19 +270,20 @@ def view_examsubmissions(request):
                     score = ''
                     break
         return (render(request, 'grades/view_examsubmissions.html', {
-                                    'submissions': submissions
-                                }))
+            'submissions': submissions,
+            'role': getRole(request)
+        }))
 
 
-@csrf_exempt
 def grade_examsubmissions(request):
     submission = ExamSubmission.objects.get(id=request.GET['submission'])
     answers = ExamAnswer.objects.filter(examSubmission=submission)
     if request.method == "GET":
         return (render(request, "grades/grade_examsubmission.html", {
-                                    'submission': submission,
-                                    'answers': answers
-                                }))
+            'submission': submission,
+            'answers': answers,
+            'role': getRole(request)
+        }))
     elif request.method == "POST":
         grader = Person.objects.get(user=request.user)
         for answer in answers:
@@ -310,6 +314,7 @@ def grades(request):
                 break
     assignment_grades = Submission.objects.filter(submitter=person)
     return (render(request, "grades/grades.html", {
-                                'exam_grades': exam_grades,
-                                'assignment_grades': assignment_grades
-                            }))
+        'exam_grades': exam_grades,
+        'assignment_grades': assignment_grades,
+        'role': getRole(request)
+    }))

@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
-
 {% block content %}
-{% autoescape off %}
+{% autoescape on %}
 <table class="table table-striped">
-<tr>
-    <td>Submitter</td>
-    <td>Date Submitted</td>
-    <td>Total Score</td>
-</tr>
-{% for submission in submissions %}
-<tr>
-    <td>
-        <a href="grade_examsubmission?submission={{ submission.id|safe }}">
-    {{ submission.submitter.user.first_name|safe }} {{ submission.submitter.user.last_name|safe }}</a>
-    </td>
-    <td>
-        <a href="grade_examsubmission?submission={{ submission.id|safe }}">
-    {{ submission.date_submitted|safe }}</a>
-    </td>
-    <td>
-        <a href="grade_examsubmission?submission={{ submission.id|safe }}">
-    {% if score != "" %}{{ submission.score|safe }}{% else %}-{% endif %}</a>
-    </td>
-</tr>
+    <tr>
+        <td>Submitter</td>
+        <td>Date Submitted</td>
+        <td>Total Score</td>
+    </tr>
+    {% for submission in submissions %}
+        <tr>
+            <td>
+                <a href="grade_examsubmission?submission={{ submission.id|safe }}">
+            {{ submission.submitter.user.first_name|safe }} {{ submission.submitter.user.last_name|safe }}</a>
+            </td>
+            <td>
+                <a href="grade_examsubmission?submission={{ submission.id|safe }}">
+            {{ submission.date_submitted|safe }}</a>
+            </td>
+            <td>
+                <a href="grade_examsubmission?submission={{ submission.id|safe }}">
+                    {% if score != "" %}{{ submission.score|safe }}{% else %}-{% endif %}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
 </table>
-{% endfor %}
 {% endautoescape %}
 {% endblock %}

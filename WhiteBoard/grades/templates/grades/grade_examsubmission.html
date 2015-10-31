@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-{% autoescape off %}
+{% autoescape on %}
 <h3 class="page-heading">
     Exam submitted by {{ submission.submitter.user.first_name|safe }} {{ submission.submitter.user.last_name|safe }} on {{ submision.date_submitted|safe }}
 </h3>
 <form action="" id="form" method="post">
+    {% csrf_token %}
     <ol>
     {% for answer in answers %}
         <li>

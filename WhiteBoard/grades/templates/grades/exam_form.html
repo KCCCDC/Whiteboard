@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-{% autoescape off %}
+{% autoescape on %}
 <form action="" method="">
+    {% csrf_token %}
     {{ form.as_p|safe }}
     <button class="btn btn-default" type="submit">Save Changes</button>
 </form>
@@ -15,8 +16,10 @@
     </a>
     {% endfor %}
 </ol>
-<a href="add_question?exam={{ exam.id|safe }}">
-    <button class="btn btn-default">Add Question</button>
-</a>
+{% if role == 'PROF' %}
+    <a href="add_question?exam={{ exam.id|safe }}">
+        <button class="btn btn-default">Add Question</button>
+    </a>
+{% endif %}
 {% endautoescape %}
 {% endblock %}

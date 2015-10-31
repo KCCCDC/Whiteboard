@@ -3,19 +3,17 @@ from os.path import isfile, join
 
 from django.core.urlresolvers import reverse
 from django.contrib.auth import (authenticate, login as authLogin, logout
-     as authLogout, update_session_auth_hash)
+                                 as authLogout, update_session_auth_hash)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import (check_password, make_password,
-     is_password_usable)
+                                         is_password_usable)
 from django.contrib.auth.models import User
-
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.templatetags.static import static
 from django.shortcuts import render
 from django.views.generic.edit import FormView, CreateView
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 
 from .forms import EventForm
 from .models import Event
@@ -28,11 +26,12 @@ def calendar(request):
     gradable_items = GradableItem.objects.all().order_by('due_date')
     events = Event.objects.all().order_by('date')
     return render(request, "calendar/calendar.html", {
-        'gradable_items': gradable_items, 'events': events
+        'gradable_items': gradable_items,
+        'events': events,
+        'role': getRole(request)
     })
 
 
-@csrf_exempt
 def edit_event(request):
     if request.method == "GET":
         if 'event' not in request.method:
@@ -41,7 +40,8 @@ def edit_event(request):
             event = Event.objects.get(id=request.GET['event'])
             form = EventForm(instance=instance)
         return render(request, "base_form.html", {
-            'form': form
+            'form': form,
+            'role': getRole(request)
         })
     elif request.method == "POST":
         if 'event' not in request.GET:
@@ -49,5 +49,8 @@ def edit_event(request):
         else:
             instance = Event.objects.get(id=request.GET['event'])
             form = EventForm(request.POST, instance=instance)
-        form.save()
+        if form.is_valid():
+            form.save()
+        else:
+            print form.errors
         return HttpResponseRedirect(reverse("calendar:calendar"))
