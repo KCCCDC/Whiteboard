@@ -21,7 +21,7 @@ from WhiteBoard.base.helpers import getRole
 from WhiteBoard.base.models import Person
 from WhiteBoard.grades.models import GradableItem
 
-@login_required(login_url='/login')
+@login_required(login_url='/loginRequired')
 def calendar(request):
     gradable_items = GradableItem.objects.all().order_by('due_date')
     events = Event.objects.all().order_by('date')
@@ -31,7 +31,7 @@ def calendar(request):
         'role': getRole(request)
     })
 
-@login_required(login_url='/login')
+@login_required(login_url='/loginRequired')
 def edit_event(request):
     if request.method == "GET":
         if 'event' not in request.method:
