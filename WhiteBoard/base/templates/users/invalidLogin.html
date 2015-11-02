@@ -1,34 +1,35 @@
 {% extends "base.html" %}
-{% block menubar %}
-{% autoescape on %}
-<nav class="navbar navbar-default" style="padding:8px;">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <div class="nav navbar-nav">
-            {% load static %}
-            <img src="{% static 'logo-med-lilac.png' %}" alt="Whiteboard">
-            </div>
-        </div>
-    </div>
-</nav>
-{% endautoescape %}
-{% endblock %}
 {% block content %}
 {% autoescape on %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Permission Denied</h3>
+            <h3 class="panel-title">Invalid Login</h3>
     </div>
     <div class="panel-body">
-        <p>That was not a correct username or password.</p>
         <br>
         <p>
-            <a href="{% url 'base:login' %}">
-                <button class="btn btn-default">
-                    Click here to log in again
-                </button>
-            </a>
+            <b>
+                That was not a valid login. Please log in below.
+            </b>
         </p>
+        <br>
+        <form action= "{% url 'base:auth' %}" method= "POST">
+        {% csrf_token %}
+            <label for="username"> Username: </label>
+            <input type="text" name="username" value="" placeholder="username" id="username">
+            <br>
+            <label for="password"> Password: </label>
+            <input type="password" name="password" value="" placeholder="password" id="password">
+            <br>
+            <br>
+            <button type="submit" value="Log in" class="btn btn-default">Submit</button>
+        </form>
+        <br>
+        <a href="{% url 'base:index' %}">
+            <button type="button" class="btn btn-default">
+                Go back to index page
+            </button>
+        </a>
     </div>
 </div>
 {% endautoescape %}

@@ -1,52 +1,31 @@
 {% extends "base.html" %}
-{% block menubar %}
-{% autoescape on %}
-<nav class="navbar navbar-default" style="padding:8px;">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <div class="nav navbar-nav">
-                {% load static %}
-                <img src="{% static 'logo.png' %}" alt="Whiteboard">
-            </div>
-        </div>
-    </div>
-</nav>
-{% endautoescape %}
-{% endblock %}
 {% block content %}
 {% autoescape on %}
 <div class="panel panel-default">
     <div class="panel-heading">
-            <h3 class="panel-title">Permission Denied</h3>
+            <h3 class="panel-title">Login Required</h3>
     </div>
     <div class="panel-body">
+        <br>
         <p>
-            You must be logged in to see this page.
-            Please log in below or register for a new account.
+            <b>
+                You need to be logged in to view this page. Please log in below.
+            </b>
         </p>
         <br>
-        <form action= "{% url 'base:authView' %}" method= "POST">
-            {% csrf_token %}
-            <label for ="username">
-                <b>Username:</b>
-            </label>
-            <input type="text" name="username" value="" id="username">
+        <form action= "{% url 'base:auth' %}" method= "POST">
+        {% csrf_token %}
+            <label for="username"> Username: </label>
+            <input type="text" name="username" value="" placeholder="username" id="username">
             <br>
-            <label for ="password">
-                <b>Password:</b> 
-            </label>
-            <input type="password" name="password" value="" id="password">
+            <label for="password"> Password: </label>
+            <input type="password" name="password" value="" placeholder="password" id="password">
             <br>
             <br>
-            <input type= "submit" value="Log in" class="btn btn-default">
+            <button type="submit" value="Log in" class="btn btn-default">Submit</button>
         </form>
         <br>
-        <a href="{% url 'base:register' %}">
-            <button type="button" class="btn btn-default">
-                Click here to register for a new account
-            </button>
-        </a>
-        <a href = "{% url 'base:index' %}">
+        <a href="{% url 'base:index' %}">
             <button type="button" class="btn btn-default">
                 Go back to index page
             </button>

@@ -10,6 +10,7 @@ urlpatterns = patterns(
     url(r'^$', views.index, name='default'),
     url(r'^index/', views.index, name='index'),
     url(r'^invalidLogin', views.invalidLogin, name='invalidLogin'),
+    url(r'^loginRequired', views.loginRequired, name='loginRequired'),
     url(r'^logout', views.logout, name='logout'),
     url(r'^home', views.home, name='home'),
     url(r'^announcements', views.announcements, name='announcments'),

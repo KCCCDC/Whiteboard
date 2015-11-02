@@ -21,7 +21,7 @@ from .models import Announcement, Person
 
 def logout(request):
     authLogout(request)
-    return HttpResponseRedirect(reverse('base:index'))
+    return HttpResponseRedirect(reverse('base:login'))
 
 
 def login(request):
@@ -42,15 +42,20 @@ def auth(request):
 
 
 def invalidLogin(request):
-    return render(request, 'users/invalidLogin.html', {
-        'role': getRole(request)
-    })
+    return render(request, 'users/invalidLogin.html')
 
 
 def index(request):
-    return login(request)
+    if request.user.is_authenticated():
+        return home(request)
+    else:
+        return login(request)
 
 
+def loginRequired(request):
+    return render(request, 'users/loginRequired.html')
+
+@login_required(login_url='/login')
 def home(request):
     announcments = Announcement.objects.all()
     return render(request, 'home.html', {
@@ -58,7 +63,7 @@ def home(request):
         'role': getRole(request)
     })
 
-
+@login_required(login_url='/login')
 def announcements(request):
     announcements = Announcement.objects.all()
     return render(request, 'announcements.html', {
