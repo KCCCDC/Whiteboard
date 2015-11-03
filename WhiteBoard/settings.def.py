@@ -26,6 +26,10 @@ with open('secret_key') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# HTTPS STUFF
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # clickjacking
@@ -69,7 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.csrf'
+		'django.core.context_processors.csrf',
             ],
         },
     },
@@ -88,7 +92,7 @@ DATABASES = {
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
-        'POST': '',
+        'PORT': '',
     }
 }
 
