@@ -19,6 +19,14 @@ from .helpers import getRole
 from .models import Announcement, Person
 
 
+def handler404(request):
+    return render(request, '404.html')
+
+
+def handler500(request):
+    return render(request, '500.html')
+
+
 def logout(request):
     authLogout(request)
     return HttpResponseRedirect(reverse('base:login'))
