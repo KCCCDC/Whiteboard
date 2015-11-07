@@ -4,21 +4,22 @@
 <form action="" method="post">
     {% csrf_token %}
     <ol>
-	{% if taken == True %}
-		 <font color="red">Error:Exam already submitted!</font> 
-	{% else %}
-		{% for question in questions %}
-			<li>
-				<div class="form-group">
-					<label for="{{ question.id|safe }}">{{ question.text|safe }}</label>
-					<input class="form-control semiColon required" id="{{ question.id|safe }}" type="text" name="{{ question.id|safe }}">
-				</div>
-			</li>
-		{% endfor %}
-	</ol>
-	<button class="btn btn-default" type="submit">Submit</button>
-	{% endif %}
-    
+    {% if taken %}
+        <font color="red">Error: Exam already submitted!</font> 
+    {% else %}
+        {% for question in questions %}
+            <li>
+                <div class="form-group">
+                    <label for="{{ question.id|safe }}">{{ question.text|safe }}</label>
+                    <input class="form-control semiColon required" 
+                           id="{{ question.id|safe }}" type="text" 
+                           name="{{ question.id|safe }}">
+                </div>
+            </li>
+        {% endfor %}
+        <button class="btn btn-default" type="submit">Submit</button>
+    {% endif %}
+    </ol>
     
 </form>
 {% endautoescape %}

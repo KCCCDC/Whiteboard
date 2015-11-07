@@ -22,6 +22,7 @@ from .forms import (AssignmentForm, SubmissionForm, GradeAssignmentForm,
 from WhiteBoard.base.helpers import getRole
 from WhiteBoard.base.models import Person
 
+
 @login_required(login_url='/loginRequired')
 def assignments(request):
     assignments = GradableItem.objects.filter(type='HMWK')
@@ -38,6 +39,7 @@ def assignments(request):
         'isRedirect': False
     })
 
+
 @login_required(login_url='/loginRequired')
 def submit_assignment(request):
     id = request.GET['id']
@@ -47,17 +49,17 @@ def submit_assignment(request):
         if instance.count() == 0:
             form = SubmissionForm()
             return render(request, "file_upload_form.html", {
-            'form': form,
-            'role': getRole(request)
-			})
+                'form': form,
+                'role': getRole(request)
+            })
         else:
             form = SubmissionForm(instance=instance[0])
             assignments = GradableItem.objects.filter(type='HMWK')
             return render(request, 'grades/assignments.html', {
-				'assignments': assignments,
-				'role': getRole(request),
-				'isRedirect': True
-    })
+                'assignments': assignments,
+                'role': getRole(request),
+                'isRedirect': True
+            })
     elif request.method == 'POST':
         if instance.count() == 0:
             form = SubmissionForm(request.POST, request.FILES)
@@ -68,6 +70,7 @@ def submit_assignment(request):
         form.instance.submitter_id = request.user.id
         form.save()
         return HttpResponseRedirect(reverse('grades:assignments'))
+
 
 @login_required(login_url='/loginRequired')
 def edit_assignment(request):
@@ -97,6 +100,7 @@ class CreateAssignmentView(CreateView):
     def form_valid(self, form):
         form.instance.type = "HMWK"
         return super(CreateAssignmentView, self).form_valid(form)
+
 
 @login_required(login_url='/loginRequired')
 def submissions(request):
@@ -130,6 +134,7 @@ def submissions(request):
         'assignments': assignments,
         'role': getRole(request)
     }))
+
 
 @login_required(login_url='/loginRequired')
 def exams(request):
@@ -182,6 +187,7 @@ def exams(request):
                 'role': getRole(request)
             }))
 
+
 @login_required(login_url='/loginRequired')
 def create_exam(request):
     if request.method == "GET":
@@ -196,6 +202,7 @@ def create_exam(request):
         form.save()
         url = reverse('grades:exams')
         return HttpResponseRedirect(url + "?exam=" + str(form.instance.id))
+
 
 @login_required(login_url='/loginRequired')
 def edit_question(request):
@@ -230,22 +237,25 @@ def edit_question(request):
             return (HttpResponseRedirect(
                     url + "?exam=" + str(form.instance.gradableItem_id)))
 
+
 @login_required(login_url='/loginRequired')
 def take_exam(request):
     if 'exam' not in request.GET:
         return HttpResponseRedirect(reverse('grades:exams'))
     if request.method == "GET":
-		questions = (ExamQuestion.objects.filter(gradableItem_id=request.GET['exam']))
-		person = Person.objects.get(user=request.user)
-		submission = (ExamSubmission.objects.filter(gradableItem=request.GET['exam'], submitter=person))
-		if submission.count() > 0:
-			taken=1
-		else:
-			taken=0
-		return (render(request, 'grades/take_exam.html', {
-								'questions': questions,
-								'taken': taken,
-								'role': getRole(request)
+        questions = (ExamQuestion.objects.filter(
+                        gradableItem_id=request.GET['exam']))
+        person = Person.objects.get(user=request.user)
+        submission = (ExamSubmission.objects.filter(
+                        gradableItem=request.GET['exam'], submitter=person))
+        if submission.count() > 0:
+            taken = 1
+        else:
+            taken = 0
+        return (render(request, 'grades/take_exam.html', {
+                                'questions': questions,
+                                'taken': taken,
+                                'role': getRole(request)
         }))
     elif request.method == "POST":
         submitter = Person.objects.get(user=request.user)
@@ -265,6 +275,7 @@ def take_exam(request):
                             )
             examAnswer.save()
         return HttpResponseRedirect(reverse('grades:exams'))
+
 
 @login_required(login_url='/loginRequired')
 def view_examsubmissions(request):
@@ -287,6 +298,7 @@ def view_examsubmissions(request):
             'submissions': submissions,
             'role': getRole(request)
         }))
+
 
 @login_required(login_url='/loginRequired')
 def grade_examsubmissions(request):
@@ -312,6 +324,7 @@ def grade_examsubmissions(request):
                     "?exam=" +
                     str(submission.gradableItem_id)
                 ))
+
 
 @login_required(login_url='/loginRequired')
 def grades(request):
