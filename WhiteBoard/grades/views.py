@@ -228,11 +228,17 @@ def take_exam(request):
     if 'exam' not in request.GET:
         return HttpResponseRedirect(reverse('grades:exams'))
     if request.method == "GET":
-        questions = (ExamQuestion.objects.filter(
-                     gradableItem_id=request.GET['exam']))
-        return (render(request, 'grades/take_exam.html', {
-            'questions': questions,
-            'role': getRole(request)
+		questions = (ExamQuestion.objects.filter(gradableItem_id=request.GET['exam']))
+		person = Person.objects.get(user=request.user)
+		submission = (ExamSubmission.objects.filter(gradableItem=request.GET['exam'], submitter=person))
+		if submission.count() > 0:
+			taken=1
+		else:
+			taken=0
+		return (render(request, 'grades/take_exam.html', {
+								'questions': questions,
+								'taken': taken,
+								'role': getRole(request)
         }))
     elif request.method == "POST":
         submitter = Person.objects.get(user=request.user)
@@ -260,6 +266,7 @@ def view_examsubmissions(request):
     if request.method == "GET":
         submissions = (ExamSubmission.objects.filter(
                       gradableItem_id=request.GET['exam']))
+
         for submission in submissions:
             questions = ExamAnswer.objects.filter(examSubmission=submission)
             submission.score = 0
