@@ -63,6 +63,7 @@ def index(request):
 def loginRequired(request):
     return render(request, 'users/loginRequired.html')
 
+
 @login_required(login_url='/loginRequired')
 def home(request):
     announcments = Announcement.objects.all()
@@ -70,6 +71,7 @@ def home(request):
         'announcements': announcements,
         'role': getRole(request)
     })
+
 
 @login_required(login_url='/loginRequired')
 def announcements(request):
