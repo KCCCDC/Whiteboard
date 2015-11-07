@@ -5,7 +5,7 @@
     {% csrf_token %}
     <ol>
 	{% if taken == True %}
-		you get one m9
+		 <font color="red">Error:Exam already submitted!</font> 
 	{% else %}
 		{% for question in questions %}
 			<li>
@@ -15,9 +15,11 @@
 				</div>
 			</li>
 		{% endfor %}
+	</ol>
+	<button class="btn btn-default" type="submit">Submit</button>
 	{% endif %}
-    </ol>
-    <button class="btn btn-default" type="submit">Submit</button>
+    
+    
 </form>
 {% endautoescape %}
 {% endblock %}
