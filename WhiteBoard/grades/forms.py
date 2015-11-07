@@ -15,7 +15,7 @@ class SubmissionForm(forms.ModelForm):
         model = Submission
         fields = ('submission_text', 'file')
         exclude = ('gradableItem', 'submitter', 'date_submitted', 'grader',
-                   'score', 'grading_comment')
+                   'score', 'grading_comment', 'file')
 
 
 class GradeAssignmentForm(forms.ModelForm):
