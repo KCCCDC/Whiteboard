@@ -34,7 +34,8 @@ def assignments(request):
             assignment.submission = ''
     return render(request, 'grades/assignments.html', {
         'assignments': assignments,
-        'role': getRole(request)
+        'role': getRole(request),
+        'isRedirect': False
     })
 
 @login_required(login_url='/loginRequired')
@@ -45,12 +46,18 @@ def submit_assignment(request):
     if request.method == 'GET':
         if instance.count() == 0:
             form = SubmissionForm()
-        else:
-            form = SubmissionForm(instance=instance[0])
-        return render(request, "file_upload_form.html", {
+            return render(request, "file_upload_form.html", {
             'form': form,
             'role': getRole(request)
-        })
+			})
+        else:
+            form = SubmissionForm(instance=instance[0])
+            assignments = GradableItem.objects.filter(type='HMWK')
+            return render(request, 'grades/assignments.html', {
+				'assignments': assignments,
+				'role': getRole(request),
+				'isRedirect': True
+    })
     elif request.method == 'POST':
         if instance.count() == 0:
             form = SubmissionForm(request.POST, request.FILES)
